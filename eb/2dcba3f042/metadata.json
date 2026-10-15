@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "eb2dcba3f042",
+  "strategy": "manual-commit",
+  "branch": "alee/395-shared-graph-boundary",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "src/archy/layers.py",
+    "tests/test_mcp.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/eb/2dcba3f042/0/metadata.json",
+      "transcript": "/eb/2dcba3f042/0/full.jsonl",
+      "content_hash": "/eb/2dcba3f042/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 376,
+    "cache_creation_tokens": 268620,
+    "cache_read_tokens": 31172546,
+    "output_tokens": 113055,
+    "api_call_count": 178
+  }
+}
