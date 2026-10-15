@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "507e9abee3ab",
+  "strategy": "manual-commit",
+  "branch": "alee/387-reach-asymmetry-pilot",
+  "checkpoints_count": 10,
+  "files_touched": [
+    "bench/reach_asymmetry_precision.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/50/7e9abee3ab/0/metadata.json",
+      "transcript": "/50/7e9abee3ab/0/full.jsonl",
+      "content_hash": "/50/7e9abee3ab/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 176,
+    "cache_creation_tokens": 146808,
+    "cache_read_tokens": 8915394,
+    "output_tokens": 52573,
+    "api_call_count": 84
+  }
+}
