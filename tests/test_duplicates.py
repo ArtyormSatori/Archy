@@ -184,6 +184,27 @@ def test_deterministic_under_permuted_input():
     assert compute_duplicates(*forward) == compute_duplicates(*reverse)
 
 
+def test_exact_members_order_by_module_then_line_then_name():
+    # In pkg.a, line order and name order disagree (zeta is first by line, alpha
+    # by name), so a key that compares names before lines puts alpha first.
+    # Input is fed out of order so that an unsorted pass fails too.
+    modules, results = _project(
+        {
+            "pkg.b": [_fn("g", shape="H1", size=30, line=5)],
+            "pkg.a": [
+                _fn("alpha", shape="H1", size=30, line=10),
+                _fn("zeta", shape="H1", size=30, line=1),
+            ],
+        }
+    )
+    (group,) = compute_duplicates(modules, results)
+    assert [(m.module, m.line, m.qualified_name) for m in group.members] == [
+        ("pkg.a", 1, "zeta"),
+        ("pkg.a", 10, "alpha"),
+        ("pkg.b", 5, "g"),
+    ]
+
+
 def test_empty_input_yields_no_groups():
     assert compute_duplicates([], {}) == []
 
@@ -700,13 +721,16 @@ _NEAR_BODY = (
 )
 
 
+def _near_variant(name: str, *, after: str = "kept = []", insert: str = "seen = set()") -> str:
+    """`_NEAR_BODY` with one statement inserted: a Type-3 clone with its own shape_hash."""
+    return _NEAR_BODY.format(n=name).replace(f"    {after}\n", f"    {after}\n    {insert}\n")
+
+
 def test_near_miss_clusters_gapped_clone(tmp_path: Path):
     pkg = _make_pkg(tmp_path)
     (pkg / "a.py").write_text(_NEAR_BODY.format(n="alpha"))
     # beta = alpha + one inserted statement -> different shape_hash (Type-3).
-    (pkg / "b.py").write_text(
-        _NEAR_BODY.format(n="beta").replace("    kept = []\n", "    kept = []\n    seen = set()\n")
-    )
+    (pkg / "b.py").write_text(_near_variant("beta"))
     modules, results = parse_project(tmp_path)
     assert compute_duplicates(modules, results, min_size=10) == []  # shapes differ
     near = compute_near_duplicates(modules, results, min_size=10, min_similarity=0.8)
@@ -720,6 +744,27 @@ def test_near_miss_clusters_gapped_clone(tmp_path: Path):
     # return: a containment score would read 1.0 here and still pass (#440).
     assert g.similarity == pytest.approx(52 / 61)
     assert {m.qualified_name for m in g.members} == {"alpha", "beta"}
+
+
+def test_near_miss_members_order_by_module_then_line_then_name(tmp_path: Path):
+    """Same order as the exact pass: module, then line, then name.
+
+    pkg.a holds zeta (line 1) and alpha (line 10), so line order and name order
+    disagree; pkg.b sorts after both. Each function is a distinct one-statement
+    variant of `_NEAR_BODY`, so all three shapes are singletons and the exact
+    pass cannot claim them.
+    """
+    pkg = _make_pkg(tmp_path)
+    (pkg / "a.py").write_text(_NEAR_BODY.format(n="zeta") + "\n" + _near_variant("alpha"))
+    (pkg / "b.py").write_text(_near_variant("beta", after="total = 0", insert="count = 1"))
+    modules, results = parse_project(tmp_path)
+    assert compute_duplicates(modules, results, min_size=10) == []
+    (group,) = compute_near_duplicates(modules, results, min_size=10, min_similarity=0.8)
+    assert [(m.module, m.line, m.qualified_name) for m in group.members] == [
+        ("pkg.a", 1, "zeta"),
+        ("pkg.a", 10, "alpha"),
+        ("pkg.b", 1, "beta"),
+    ]
 
 
 def test_near_miss_excludes_unrelated(tmp_path: Path):
@@ -752,9 +797,7 @@ def test_near_miss_excludes_exact_clustered(tmp_path: Path):
 def test_cli_duplicates_near_miss_json(tmp_path: Path):
     pkg = _make_pkg(tmp_path)
     (pkg / "a.py").write_text(_NEAR_BODY.format(n="alpha"))
-    (pkg / "b.py").write_text(
-        _NEAR_BODY.format(n="beta").replace("    kept = []\n", "    kept = []\n    seen = set()\n")
-    )
+    (pkg / "b.py").write_text(_near_variant("beta"))
     result = CliRunner().invoke(
         main,
         ["duplicates", str(tmp_path), "--min-nodes", "10", "--near-miss", "--format", "json"],
