@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "66786624b077",
+  "strategy": "manual-commit",
+  "branch": "alee/test-hygiene-199-238-239",
+  "checkpoints_count": 11,
+  "files_touched": [
+    "tests/test_mcp.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/66/786624b077/0/metadata.json",
+      "transcript": "/66/786624b077/0/full.jsonl",
+      "content_hash": "/66/786624b077/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 438,
+    "cache_creation_tokens": 317987,
+    "cache_read_tokens": 39951560,
+    "output_tokens": 129282,
+    "api_call_count": 205
+  }
+}
