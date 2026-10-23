@@ -1,0 +1,156 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "638e796fcc23",
+  "session_id": "01866254-fba3-4e0c-bbc4-a664a22ceb0a",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-23T17:17:10.529845Z",
+  "branch": "alee/519-print-config-diff",
+  "checkpoints_count": 7,
+  "save_step_count": 7,
+  "files_touched": [
+    "src/archy/cli.py",
+    "src/archy/install/runner.py",
+    "tests/install/unit/test_cli_print_config.py"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-5-5",
+  "turn_id": "07bad4d81c41",
+  "token_usage": {
+    "input_tokens": 204,
+    "cache_creation_tokens": 218043,
+    "cache_read_tokens": 13475940,
+    "output_tokens": 58446,
+    "api_call_count": 94
+  },
+  "skill_events_version": 1,
+  "skill_events": [
+    {
+      "id": "claude-skill-toolu_01X5K2QzT5Pbef1zC7co2mET",
+      "event_type": "tool_invocation",
+      "skill": {
+        "name": "workflow-authoring"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "skill_tool_use",
+        "confidence": "explicit"
+      },
+      "turn_id": "07bad4d81c41",
+      "transcript_anchor": {
+        "unit": "line",
+        "start": 170,
+        "end": 171,
+        "entry_ids": [
+          "6e5658fb-72bf-420a-babc-b058809836dc"
+        ],
+        "tool_use_id": "toolu_01X5K2QzT5Pbef1zC7co2mET"
+      },
+      "native": {
+        "tool_name": "Skill",
+        "tool_use_id": "toolu_01X5K2QzT5Pbef1zC7co2mET"
+      },
+      "collapse": {
+        "target": "tool_pair",
+        "label": "Skill: workflow-authoring",
+        "default_collapsed": true
+      }
+    },
+    {
+      "id": "claude-skill-toolu_01KdihPrPGpksBaTBnACiy8y",
+      "event_type": "tool_invocation",
+      "skill": {
+        "name": "deepwork:review"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "skill_tool_use",
+        "confidence": "explicit"
+      },
+      "turn_id": "07bad4d81c41",
+      "transcript_anchor": {
+        "unit": "line",
+        "start": 833,
+        "end": 834,
+        "entry_ids": [
+          "7068b8c0-d31c-4c3b-a103-ca77f8182c8e"
+        ],
+        "tool_use_id": "toolu_01KdihPrPGpksBaTBnACiy8y"
+      },
+      "native": {
+        "tool_name": "Skill",
+        "tool_use_id": "toolu_01KdihPrPGpksBaTBnACiy8y"
+      },
+      "collapse": {
+        "target": "tool_pair",
+        "label": "Skill: deepwork:review",
+        "default_collapsed": true
+      }
+    }
+  ],
+  "session_metrics": {
+    "turn_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-10-23T17:17:10.486247Z",
+    "agent_lines": 52,
+    "agent_removed": 2,
+    "human_added": 173,
+    "human_modified": 46,
+    "human_removed": 0,
+    "total_committed": 271,
+    "total_lines_changed": 273,
+    "agent_percentage": 19.78021978021978,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 5,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 6,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 7,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    }
+  ]
+}
