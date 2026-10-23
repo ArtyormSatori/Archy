@@ -103,13 +103,19 @@ def resolve_targets(target: str) -> list[AgentAdapter]:
     requested = [piece.strip() for piece in spec.split(",") if piece.strip()]
     if not requested:
         raise InstallError("Empty --target. Use auto, all, or a comma list of ids.")
-    adapters: list[AgentAdapter] = []
-    for adapter_id in requested:
-        try:
-            adapters.append(get_adapter(adapter_id))
-        except KeyError as exc:
-            raise InstallError(str(exc)) from exc
-    return adapters
+    return [_known_adapter(adapter_id) for adapter_id in requested]
+
+
+def _known_adapter(adapter_id: str) -> AgentAdapter:
+    """`get_adapter`, but an unknown id is the user's input error, not a crash.
+
+    The CLI turns `InstallError` into a clean `Error:` line (#337). `args[0]`
+    rather than `str(exc)`, which would wrap the message in quotes.
+    """
+    try:
+        return get_adapter(adapter_id)
+    except KeyError as exc:
+        raise InstallError(exc.args[0]) from exc
 
 
 def plan_for(
@@ -256,7 +262,7 @@ def preview_config(
     seed_permissions: bool = True,
 ) -> list[ConfigPreview]:
     """Dry-run a single adapter and pair each rendered file with its baselines."""
-    adapter = get_adapter(adapter_id)
+    adapter = _known_adapter(adapter_id)
     ws = DryRunWriteSystem()
     plan = plan_for(adapter, scope, project_root=project_root, seed_permissions=seed_permissions)
     previews: list[ConfigPreview] = []
