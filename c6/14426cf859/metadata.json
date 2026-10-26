@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "c614426cf859",
+  "strategy": "manual-commit",
+  "branch": "alee/release-v0.49.0",
+  "checkpoints_count": 9,
+  "files_touched": [
+    "README.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/c6/14426cf859/0/metadata.json",
+      "transcript": "/c6/14426cf859/0/full.jsonl",
+      "content_hash": "/c6/14426cf859/0/content_hash.txt",
+      "prompt": "/c6/14426cf859/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 74,
+    "cache_creation_tokens": 24326,
+    "cache_read_tokens": 10981341,
+    "output_tokens": 11742,
+    "api_call_count": 27
+  }
+}
