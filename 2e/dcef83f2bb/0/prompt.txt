@@ -1,0 +1,1245 @@
+<task-notification>
+<task-id>btgga7hkv</task-id>
+<tool-use-id>toolu_01CCwY9UXrvJ1KUdq8o6ytFb</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/btgga7hkv.output</output-file>
+<status>completed</status>
+<summary>Background command "Wait for all PR CI checks to finish" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+PR merged
+
+---
+
+lets review PR 561
+
+---
+
+<task-notification>
+<task-id>a298195e3a8d1b056</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a298195e3a8d1b056.output</output-file>
+<status>completed</status>
+<summary>Agent "561 no_em_dashes" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>No em dashes (U+2014) turned up in any of the 7 files, so I marked review `no_em_dashes--7_files--c0f9047a688a` as passed.
+
+I searched all seven files for the character with `grep` run from `/Users/hosanglee/archy`, and it returned no matches.</result>
+<usage><subagent_tokens>17017</subagent_tokens><tool_uses>3</tool_uses><duration_ms>8914</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a6e84d63ee542a508</task-id>
+<tool-use-id>toolu_01VpTMNNoc3VDmXPX1APHgTU</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a6e84d63ee542a508.output</output-file>
+<status>completed</status>
+<summary>Agent "561 parity" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>No cross-surface fields changed. I marked the review as passed.
+
+The diff to `/Users/hosanglee/archy/src/archy/cli.py` only gives the `path` argument a default of `.` on the `graph` and `cycles` commands. It adds or changes no field, section, gate, or payload. I made no changes to `/Users/hosanglee/archy/src/archy/mcp.py`, and no new MCP tool is registered, so `TOOL_NAMES` is unaffected.</result>
+<usage><subagent_tokens>18182</subagent_tokens><tool_uses>3</tool_uses><duration_ms>10284</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a777bf11b700305ca</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a777bf11b700305ca.output</output-file>
+<status>completed</status>
+<summary>Agent "561 suggest reviews" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>No new rules warranted. I marked the review as passed.
+
+I did not open the seven changed files. I judged from the file list in the instructions: four research notes, one report, a CLI default-path fix in `src/archy/cli.py`, and its test in `tests/test_cli.py`. Nothing in that list suggested a recurring class of mistake that a new rule would catch, and the default verdict is pass.</result>
+<usage><subagent_tokens>17268</subagent_tokens><tool_uses>2</tool_uses><duration_ms>10004</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>adff21ca39336c4ce</task-id>
+<tool-use-id>toolu_01PPYfFGkiwa3Nd6oeXaPbkf</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/adff21ca39336c4ce.output</output-file>
+<status>completed</status>
+<summary>Agent "561 docs" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>No documentation drift detected.
+
+The branch's only change to `src/archy/cli.py` is that `archy graph` and `archy cycles` now default their `PATH` argument to `.`. No doc I checked says the path is required. The README, `docs/CASE_STUDIES.md` and `docs/SIXTY_SECOND_TOUR.md` all pass explicit paths, and `docs/CASE_STUDIES.md` line 148 only writes `archy cycles &lt;path&gt;`.
+
+`git diff main` also showed `required-reach` changes in `src/archy/cli.py`. Those come from `main` having moved ahead (#564) and are not part of this branch (`git diff main...HEAD` shows only `cli.py` and `tests/test_cli.py`), so I didn't review them.
+
+I marked the review as passed.</result>
+<usage><subagent_tokens>25736</subagent_tokens><tool_uses>5</tool_uses><duration_ms>19786</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a4a67eb8d5ceca3e3</task-id>
+<tool-use-id>toolu_01VdBeB49ft9t3FYQaCgyVaB</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a4a67eb8d5ceca3e3.output</output-file>
+<status>completed</status>
+<summary>Agent "561 python test_cli" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>PASS: `/Users/hosanglee/archy/tests/test_cli.py` has no violations, and I marked the review as passed.
+
+- **Type syntax:** `from __future__ import annotations` is at the top. The file uses PEP 604 syntax and has no `typing.List`, `Optional` or `Any`.
+- **Paths:** it uses `pathlib.Path` throughout.
+- **Line length:** an `awk` check found no line over 100 characters.
+- **Imports:** they are grouped stdlib, third-party, then local. The one function-local import, in `_stub_run_contracts_raising`, has a stated reason in its docstring.
+- **Value objects:** the file defines none, so the frozen-pydantic rule doesn't apply.
+- **DRY:** the two-module project helpers share one builder, and the parametrized new test at lines 108-117 avoids duplicating cases.
+- **Comments:** the comments I checked explain why, not what. The new default-directory test has no stale or restating comments.</result>
+<usage><subagent_tokens>61488</subagent_tokens><tool_uses>5</tool_uses><duration_ms>18416</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a21ff0d653db22eec</task-id>
+<tool-use-id>toolu_01UrCASsd124UKUWKBEMW7sh</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a21ff0d653db22eec.output</output-file>
+<status>completed</status>
+<summary>Agent "561 python cli" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>PASS. I found no violations in `/Users/hosanglee/archy/src/archy/cli.py`, and I marked the review as passed.
+
+- **Changeset:** `python_conventions.md` says to review what the changeset did, not the whole file. The branch's only change to this file adds `default="."` to the `path` argument of `graph` and `cycles`. It reformats those two decorators to the multi-line form used by the other commands.
+- **Mechanical checks:**
+  - No line is over 100 characters.
+  - `from __future__ import annotations` is present.
+  - There is no `Optional`, `typing.List` or `os.path`. The only `typing` import is `TYPE_CHECKING, cast`.
+- **Not reviewed:** `cli.py` is 3,695 lines, and the instruction file embedded only the first 1,560. I read about 60 more lines of the source file but did not read the rest. The scope rule and the diff cover that gap, but I did not check the unchanged remainder of the file.</result>
+<usage><subagent_tokens>43268</subagent_tokens><tool_uses>5</tool_uses><duration_ms>19445</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a6d4730db762feaa4</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a6d4730db762feaa4.output</output-file>
+<status>completed</status>
+<summary>Agent "561 structural" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>No structural regressions; blast radius verified via archy. I marked the review as passed.
+
+- **Change:** `src/archy/cli.py` now gives the `path` argument of `graph` and `cycles` a default of `"."`. Only the CLI argument declaration changed, so no import was added, removed or moved.
+- **Dependents:** `uv run archy impact . --file src/archy/cli.py` reports 9 transitive dependents, all tests. `uv run archy affected . src/archy/cli.py` lists the same 9 tests to re-run and no affected source modules:
+  - `tests.install.unit.test_cli_print_config`
+  - `tests.install.unit.test_cli_unknown_agent`
+  - `tests.test_cli`
+  - `tests.test_conventions`
+  - `tests.test_coupling`
+  - `tests.test_duplicates`
+  - `tests.test_headers`
+  - `tests.test_hotspots`
+  - `tests.test_refactor`
+- **Cycles:** `uv run archy cycles .` found none.
+- **Layer rules:** `uv run archy check .` found no violations. It says only 22% of modules are covered by layers.
+- **Edit risk:** `uv run archy what-to-refactor-next . --top 10` ranks `archy.cli` as a hotspot (priority 1.677). The diff is only two argument declarations, so I don't see a need for extra scrutiny beyond the 9 tests above.
+- **Three surfaces:** this is an argument default with no new payload field or gate, so the CLI text, CLI JSON and MCP surfaces are unaffected.
+
+The `git diff --name-only ... -- 'src/archy/**/*.py'` command from the instructions printed nothing. I took the changed file from the full `git diff` of `src/archy/cli.py` instead.</result>
+<usage><subagent_tokens>19697</subagent_tokens><tool_uses>4</tool_uses><duration_ms>34303</duration_ms></usage>
+</task-notification>
+
+---
+
+Merged.
+
+---
+
+should we cut a deploy?
+
+---
+
+or should we batch other tickets?
+
+---
+
+yep
+
+---
+
+<task-notification>
+<task-id>bp98m9qdt</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/bp98m9qdt.output</output-file>
+<status>completed</status>
+<summary>Background command "Wait for release PR CI to finish" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+merged
+
+---
+
+<task-notification>
+<task-id>b0ubqs5tj</task-id>
+<tool-use-id>toolu_01XJvetaV2JwhJsubRFcZWZM</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/b0ubqs5tj.output</output-file>
+<status>completed</status>
+<summary>Background command "Wait for the publish run to finish" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+lets continue
+
+---
+
+<task-notification>
+<task-id>a2c2180323887afa4</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a2c2180323887afa4.output</output-file>
+<status>completed</status>
+<summary>Agent "521 py cycles" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Review passed with zero violations in `/Users/hosanglee/archy/src/archy/cycles.py`. I marked it as passed.
+
+I judged each criterion from the file contents in the instruction file. I did not read `.deepwork/review/python_conventions.md`.</result>
+<usage><subagent_tokens>18153</subagent_tokens><tool_uses>2</tool_uses><duration_ms>7094</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>afd2e2de7eb716f9d</task-id>
+<tool-use-id>toolu_01UpeojF8aJFWd8QVwNpoVmc</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/afd2e2de7eb716f9d.output</output-file>
+<status>completed</status>
+<summary>Agent "521 no_em_dashes" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review passed. I found no U+2014 characters in any of the 23 changed files, and I marked `no_em_dashes--23_files--3463f9cd5c9e` as passed.
+
+I checked with a single `grep` for U+2014 across all 23 files, including `/Users/hosanglee/archy/README.md` and the files under `/Users/hosanglee/archy/src/archy/`. It returned nothing.</result>
+<usage><subagent_tokens>17475</subagent_tokens><tool_uses>3</tool_uses><duration_ms>10212</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a57932259f630299f</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a57932259f630299f.output</output-file>
+<status>completed</status>
+<summary>Agent "521 py diff" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>`src/archy/diff.py` passes the review with zero violations, and I marked review `python_code_review--src-archy-diff.py--5da3a65d316e` as passed.
+
+I checked it against all the listed criteria and found no violation of any of them. An `awk` check found no line over 100 characters; the longest I measured by hand, the `take_snapshot` signature, is 99. I didn't run ruff.</result>
+<usage><subagent_tokens>28709</subagent_tokens><tool_uses>3</tool_uses><duration_ms>12148</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a5e68aa7e1788f4a7</task-id>
+<tool-use-id>toolu_01GM8BzuGdHGvHBsLhA4W3dK</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a5e68aa7e1788f4a7.output</output-file>
+<status>completed</status>
+<summary>Agent "521 py diff_summary" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>PASS: I found no violations in `/Users/hosanglee/archy/src/archy/diff_summary.py`, and I marked the review as passed.
+
+- **Future import:** `from __future__ import annotations` is present at the top of the module.
+- **Type syntax:** All annotations use PEP 604 and builtin generics, with no `typing.List` or `Optional`.
+- **Naming:** Functions and variables are snake_case, and private helpers have an underscore prefix.
+- **Value objects:** The module defines none, so the pydantic criterion doesn't apply.
+- **Paths:** There is no `os.path` use.
+- **Import grouping:** The imports are grouped correctly: third-party (`networkx`), then local (`archy`).
+- **Line length:** No line exceeds 100 characters; I checked this with `awk`.
+- **DRY:** `_collect_regressions` and `_collect_improvements` have a similar shape, but their per-kind content differs enough that it isn't a copy-paste problem.
+- **Comments:** The comments explain why, not what. Examples are the giant-SCC truncation, the dead-rule branch, and the findings-only baseline.</result>
+<usage><subagent_tokens>24754</subagent_tokens><tool_uses>3</tool_uses><duration_ms>15748</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>aeda576e1e7f45c3a</task-id>
+<tool-use-id>toolu_01YHJ6QQZuAgD5gDqBUbWHNq</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/aeda576e1e7f45c3a.output</output-file>
+<status>completed</status>
+<summary>Agent "521 py simulate" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review of `src/archy/simulate.py` passed with zero violations, and I marked it as passed.
+
+The changeset adds a `score_delta` import and one call, `score_delta(before.score, after.score)`, with an explanatory comment. The file already has `from __future__ import annotations`, PEP 604 types, frozen pydantic models with tuple fields, correct naming and import grouping. No line exceeds 100 characters, and the new comment explains why rather than what.
+
+One pre-existing issue, not from this changeset: the `_resolve_delta` docstring says a self-loop is `rejected`, then later says self-loops are NOT rejected. It should be filed separately.</result>
+<usage><subagent_tokens>24417</subagent_tokens><tool_uses>4</tool_uses><duration_ms>12898</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>aeded64c65d6959aa</task-id>
+<tool-use-id>toolu_01FGoqDa75gRrQFz3aMX3EZF</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/aeded64c65d6959aa.output</output-file>
+<status>completed</status>
+<summary>Agent "521 py cli" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Review passed with zero violations. I marked it as passed.
+
+The file is `/Users/hosanglee/archy/src/archy/cli.py`, and I scoped the review to the changeset against `main`, as the conventions file requires. I ran `git diff main` and checked the lines the changeset touched, plus the checks that cover the whole file. Pre-existing code was out of scope.
+
+- **Type syntax:** `from __future__ import annotations` is present. No `typing.List`, `Optional` or `Any` is used. The new annotations (`dict[str, object]`, `Path | None`) use PEP 604 syntax.
+- **Paths:** there is no `os.path` and no `@dataclass` in the file.
+- **Line length:** no line exceeds 100 characters; I checked every line with awk.
+- **Imports:** the new imports (`CapturedSnapshot`, `strict_verdict`) are in the existing grouped, sorted block.
+- **DRY:** the changeset adds no copied blocks.
+- **Comments:** the new comment above the `--strict` baseline check gives a real reason and is accurate. The `.archy/baseline.json` file is overwritten by `archy snapshot`. No existing comment above edited code became false.</result>
+<usage><subagent_tokens>46097</subagent_tokens><tool_uses>5</tool_uses><duration_ms>21306</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>afbd785f07cc179e8</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/afbd785f07cc179e8.output</output-file>
+<status>completed</status>
+<summary>Agent "521 py test_diff" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review of `/Users/hosanglee/archy/tests/test_diff.py` found zero violations, and I marked `python_code_review--tests-test_diff.py--f0c461ccd0ee` as passed.
+
+- **Required elements:** `from __future__ import annotations` is present. The file uses no `typing.List` or `Optional`, no `os.path`, and defines no value objects. Imports are grouped correctly.
+- **Naming:** Names follow snake_case, with `_`-prefixed private helpers.
+- **Line length:** An `awk` check found no line over 100 characters.
+- **Comments:** The comments explain why, not what.
+- **DRY:** The `sdp` config string at lines 139 and 154 is duplicated. It is a single short line in two tests, which is below the point where a shared helper is warranted. I did not count it as a violation.</result>
+<usage><subagent_tokens>24262</subagent_tokens><tool_uses>4</tool_uses><duration_ms>15058</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>aaf4465a14cc60177</task-id>
+<tool-use-id>toolu_01Cp9yx64BqCedUk1qnryg1u</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/aaf4465a14cc60177.output</output-file>
+<status>completed</status>
+<summary>Agent "521 suggest reviews" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>No new rules warranted. I didn't open the changed files. I passed on the default verdict, because the instructions say to pass unless all four conditions are met. I haven't shown that any candidate rule meets them.
+
+I marked review `suggest_new_reviews--23_files--3463f9cd5c9e` as passed.</result>
+<usage><subagent_tokens>17501</subagent_tokens><tool_uses>2</tool_uses><duration_ms>9496</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>ad754e9a46e7c890a</task-id>
+<tool-use-id>toolu_0169gmdtZzE7Prc6eyggKv9B</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/ad754e9a46e7c890a.output</output-file>
+<status>completed</status>
+<summary>Agent "521 py test_diff_summary" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Review passed with zero violations, and I marked it as passed in DeepWork. The file reviewed was `/Users/hosanglee/archy/tests/test_diff_summary.py`.
+
+- **Imports and syntax:** `from __future__ import annotations` is at the top. The file uses no `typing.List` or `Optional`, and it uses `pathlib.Path`. Imports are grouped correctly, and naming follows snake_case with an underscore prefix on private helpers.
+- **Value objects:** The file defines none, so those criteria don't apply.
+- **Line length:** A scripted check found no line over 100 characters.
+- **Comments:** They explain why, not what.
+- **DRY (borderline, not flagged):** `test_summary_top_n_cutoff` and `test_giant_cycle_description_is_truncated` each build a package directory inline, with slightly different setup. I did not count that as a copy-pasted block that needs a shared helper.</result>
+<usage><subagent_tokens>21548</subagent_tokens><tool_uses>3</tool_uses><duration_ms>14571</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a7ad763dfb9d3b1eb</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a7ad763dfb9d3b1eb.output</output-file>
+<status>completed</status>
+<summary>Agent "521 py layers" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review of `/Users/hosanglee/archy/src/archy/layers.py` found no violations, and I marked it as passed.
+
+- **Line length:** a script check found no line over 100 characters.
+- **Typing and paths:** there is no `dataclass`, `Optional`, `typing.List` or `os.path`. The only `typing` import is `cast`, and the file uses `pathlib.Path` and PEP 604 syntax.
+- **Value objects:** they are all `BaseModel` with `frozen=True` and tuple sequence fields.
+- **Other criteria:** the `__future__` import, import grouping and naming conventions all conform. I read the comments and found them explaining why, not what. I found no copy-pasted blocks that should be shared; `_require_str_keys` already does that job for the repeated key checks.
+
+I applied the criteria listed in the instruction file. I did not open `.deepwork/review/python_conventions.md`.</result>
+<usage><subagent_tokens>36686</subagent_tokens><tool_uses>3</tool_uses><duration_ms>21306</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>ada1f436796d5ff90</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/ada1f436796d5ff90.output</output-file>
+<status>completed</status>
+<summary>Agent "521 docs" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>No documentation drift detected. I marked review `REDACTED` as passed.
+
+- **Diff strict ratchet:** `README.md` and `skills/archy/SKILL.md` already describe the `archy_diff(path, baseline=None, strict=False)` signature. That matches `src/archy/mcp.py`.
+- **Adoption docs:** the README's new "Adopting on a codebase that already has cycles" section, the Action inputs and the pre-commit hook all agree with the changes. That covers `action.yml`, `.pre-commit-hooks.yaml` and `archy snapshot --findings-only --out` in `cli.py`.
+- **Snapshot annotation:** the README says `archy_snapshot` is not read-only. `mcp.py` marks it `destructiveHint=True`, so the two match.
+- **Numbers and copies:** the 0.66% figure traces to `bench/contract_prevalence_results.md`. The two `SKILL.md` copies are byte-identical.
+
+I read the diffs of `README.md`, `skills/archy/SKILL.md`, `action.yml` and `.pre-commit-hooks.yaml` against main. The source checks were targeted greps in `src/archy/mcp.py` and `src/archy/cli.py`. I did not read the other unchanged docs under `docs/` or `bench/` in full.</result>
+<usage><subagent_tokens>33225</subagent_tokens><tool_uses>5</tool_uses><duration_ms>26268</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a73e556ce19e327b1</task-id>
+<tool-use-id>toolu_01GNMBuouMmEqC561J88dZDc</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a73e556ce19e327b1.output</output-file>
+<status>completed</status>
+<summary>Agent "521 py ratchet" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review of `src/archy/ratchet.py` found no violations, and I marked it as passed.
+
+- **Line length:** no line exceeds 100 characters. I checked this with `awk` against the file on disk.
+- **Line numbers:** the on-disk file puts `module_paths_for` at line 244, but the instruction file's copy puts it at line 289. The contents looked the same, so I reviewed the on-disk file.
+- **Conventions doc:** I did not open `.deepwork/review/python_conventions.md`. I judged the file against the criteria listed in the instruction file only.</result>
+<usage><subagent_tokens>21965</subagent_tokens><tool_uses>3</tool_uses><duration_ms>20151</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a0a9690d50b10fc8b</task-id>
+<tool-use-id>toolu_01DbgVND1Lj4EBZeMDGXuEA3</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a0a9690d50b10fc8b.output</output-file>
+<status>completed</status>
+<summary>Agent "521 py test_ratchet" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review of `/Users/hosanglee/archy/tests/test_ratchet.py` found no violations, and I marked it as passed.
+
+- **Line length:** a script check found no line over 100 characters.
+- **Other criteria:** I judged these by reading the file.
+  - `from __future__ import annotations` is at the top.
+  - Type syntax is PEP 604 style.
+  - Imports are in one group.
+  - Names follow the conventions, with `_cycle` and `_verdict` as private helpers.
+  - The file defines no value-object classes.
+  - There is no `os.path` use and no duplicated blocks.
+  - The comments explain why, not what.
+
+I did not open `.deepwork/review/python_conventions.md`, so the verdict rests only on the criteria listed in the instruction file.</result>
+<usage><subagent_tokens>20917</subagent_tokens><tool_uses>3</tool_uses><duration_ms>15645</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>ae469d83ed952ee2d</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/ae469d83ed952ee2d.output</output-file>
+<status>completed</status>
+<summary>Agent "521 py mcp" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review of `/Users/hosanglee/archy/src/archy/mcp.py` found no violations, and I marked it passed.
+
+I scoped it to the changeset (`git diff main`), as `.deepwork/review/python_conventions.md` requires. The changes are the `strict_verdict` import, the new `_SNAPSHOT_ANNOTATIONS`, the `archy_diff` `baseline` and `strict` parameters, and the `_run_diff` rewrite. No line in the file exceeds 100 characters.
+
+The new and edited comments explain why rather than what. The old `_READ_ONLY_ANNOTATIONS` docstring that the change made false was rewritten.</result>
+<usage><subagent_tokens>63955</subagent_tokens><tool_uses>5</tool_uses><duration_ms>23758</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a5e0a775a67b32dfa</task-id>
+<tool-use-id>toolu_019yQtZuyvP1doHwCThd3z7t</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a5e0a775a67b32dfa.output</output-file>
+<status>completed</status>
+<summary>Agent "521 py test_cli" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>**Verdict: FAIL.** There is one DRY violation. The other criteria hold and I found nothing else to report.
+
+**Finding 1: DRY, in code this changeset added**
+- **Lines:** 2182-2185, 2238-2246 and 2297-2300 in `/Users/hosanglee/archy/tests/test_cli.py`.
+- **Criterion:** "DRY: no copy-pasted blocks that should be a shared helper".
+- **Offending construct:** The same invocation appears three times, differing only in the project path:
+  `CliRunner().invoke(main, ["snapshot", str(X), "--findings-only", "--out", str(X / "base.json")])`
+  - The first copy is in `_make_ratchet_project`.
+  - The second is in `test_diff_strict_fails_on_a_new_layer_violation`. There it is wrapped in an awkward chained `.invoke(...).exit_code == 0` assertion.
+  - The third is in `test_findings_only_snapshot_is_stable_across_unrelated_edits`.
+  - `_strict` already shows the pattern: it is the helper for the `diff --strict` side, and nothing equivalent exists for the snapshot side.
+- **Suggested fix:** Add a helper next to `_strict`:
+  ```python
+  def _snapshot_findings_only(project: Path):
+      return CliRunner().invoke(
+          main,
+          ["snapshot", str(project), "--findings-only", "--out", str(project / "base.json")],
+      )
+  ```
+  - In `_make_ratchet_project`, use `result = _snapshot_findings_only(tmp_path)` followed by `assert result.exit_code == 0, result.output`.
+  - In the layer-violation test, replace the chained expression with the same two lines.
+  - In the stability test, replace the bare invoke with the helper call.
+
+**Criteria with no findings**
+- `from __future__ import annotations` is at the top.
+- Type syntax is PEP 604, and there is no `typing` import.
+- Naming is correct.
+- Value objects: the test file defines none.
+- `pathlib` is used, with no `os.path`.
+- Imports are grouped correctly.
+- No line exceeds 100 characters; I checked the file with `awk`.
+- Comments explain why rather than what.
+
+The review file's embedded copy was truncated at line 1297. I read the remainder directly from `/Users/hosanglee/archy/tests/test_cli.py`.</result>
+<usage><subagent_tokens>64118</subagent_tokens><tool_uses>4</tool_uses><duration_ms>21086</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>aa02c22f43e7ec762</task-id>
+<tool-use-id>toolu_019tYU892dXqnL9crAAr9UyL</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/aa02c22f43e7ec762.output</output-file>
+<status>completed</status>
+<summary>Agent "521 parity" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review passed with no findings, and I marked it passed. The new `strict` verdict on `archy diff` is on every surface, so the "wired to one surface only" bug did not recur.
+
+- **Shared model:** `strict` is a field on `DiffReport` in `src/archy/diff.py`. The CLI JSON output (`model_dump_json`) and the MCP `archy_diff` return value both come from that one model, so the field has the same name on both. The CLI text output shows it as a `# strict: PASS/FAIL, &lt;reason&gt;` line.
+- **Serialization:** `passed` and `reason` on `StrictVerdict` in `src/archy/ratchet.py` are `@computed_field`, so they survive `model_dump()` on the MCP side.
+- **Failing gate carries its reason:** `reason` is always populated. A baseline that cannot support a verdict gives `passed=false` plus `reason` naming the refusal, so there is no `passed=false` without a reason.
+- **MCP parity:** `archy_diff` gained `baseline` and `strict` parameters, and they behave like the CLI flags. `strict` without a baseline returns an error payload, matching the CLI's `UsageError`.
+- **`score_delta`:** it is now optional on `DiffReport`. The CLI text output handles the missing case with an explicit "not available" line, and the JSON and MCP forms carry `null`.
+- **`TOOL_NAMES`:** no MCP tool was added, so `src/archy/install/base.py` needs no change.
+
+One omission is intentional: `snapshot --findings-only` exists only on the CLI. The `archy_diff` description points users to the CLI command for creating the committed baseline.</result>
+<usage><subagent_tokens>24481</subagent_tokens><tool_uses>5</tool_uses><duration_ms>23770</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>af8bc7e40b08f228c</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/af8bc7e40b08f228c.output</output-file>
+<status>completed</status>
+<summary>Agent "521 py test_mcp" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>**Verdict: FAIL.** There are 2 non-blocking findings, both caused by this changeset. I did not call `mark_review_as_passed`.
+
+Everything else I checked is clean:
+- `from __future__ import annotations` is present.
+- Type syntax is PEP 604.
+- There is no `os.path` and no `typing.Any`.
+- Import groups are correct.
+- No line exceeds 100 characters.
+- The new comments explain why, and the one on `_run_snapshot(project)` is accurate.
+- I found no copy-pasted blocks in the new tests.
+
+1. **Line 68, with the stale local imports at lines 105, 886, 921, 1011 and 1019.** (non-blocking)
+   - Criterion: "Imports grouped stdlib / third-party / local…". `python_conventions.md` says function-local imports need a stated reason, such as breaking a cycle or deferring an expensive optional dependency.
+   - The changeset added module-top imports of `build_graph` (line 70), `DiffReport` (line 68) and `DiffErrorPayload` (line 76).
+   - Those names are still re-imported inside function bodies:
+     - `from archy.graph import build_graph` at lines 105, 886 and 921.
+     - `from archy.mcp import DiffErrorPayload` at line 1011.
+     - `from archy.diff import DiffReport` at line 1019.
+   - None of these local imports has a stated reason. The changeset made them redundant, and they re-bind names the module already imports.
+   - Fix: delete those five local import lines.
+
+2. **Lines 1010-1015 and 1018-1023.** (non-blocking)
+   - Criterion: DRY and import hygiene.
+   - `test_run_diff_without_baseline_returns_error` and `test_run_diff_after_snapshot_reports_zero_delta` now carry only dead local imports. Deleting them, as in finding 1, resolves this one too.
+
+No pre-existing issues worth noting.</result>
+<usage><subagent_tokens>67980</subagent_tokens><tool_uses>4</tool_uses><duration_ms>27340</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a15cca3e17304882c</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a15cca3e17304882c.output</output-file>
+<status>completed</status>
+<summary>Agent "521 structural" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>No structural regressions; blast radius verified via archy. I marked the review as passed.
+
+- **Cycles:** `uv run archy cycles .` returned "No cycles found". `ratchet.py` is new, and `diff.py` now imports it.
+- **Layer rules:** `uv run archy check .` returned "No layer violations".
+- **Blast radius of `diff.py`:** `uv run archy impact . --file src/archy/diff.py` lists 19 transitive dependents. They include `cli`, `mcp`, `diff_summary`, `simulate`, `bench.delta_direction` and `bench.simulate_oracle`. Every in-repo caller affected by the `Snapshot` and `DiffReport` changes is a changed file in this changeset.
+- **Blast radius of `ratchet.py`:** it has 21 transitive dependents, the same set plus `diff`.
+- **Blast radius of `cli.py` and `mcp.py`:** `cli.py` has 9 dependents, all tests. `mcp.py` has 11, `cli` plus tests.
+- **Tests:** `uv run archy affected . src/archy/diff.py src/archy/ratchet.py` selects 14 tests. I ran the five most relevant files (`test_diff`, `test_ratchet`, `test_mcp`, `test_cli`, `test_diff_summary`) and 323 passed, 1 skipped. I did not run the other nine selected tests.
+- **Edit risk:** `what-to-refactor-next . --top 10` puts `cli`, `mcp`, `layers` and `diff` in the top ten as complexity-and-churn hotspots, each with low edit-risk (0.11 to 0.14). `diff.py` is the only changed module in that list that is also central to the new feature.
+- **Surface parity:** `--strict` goes through the shared `strict_verdict` on the CLI, the MCP tool and the serialized `DiffReport`, so the three surfaces cannot drift apart.
+
+One minor note, not a blocker: in `mcp.py`, `_run_diff` builds the baseline path as `path / baseline`. An absolute path or a `..` segment in `baseline` can point outside the project root. I did not check whether the MCP server limits which paths it will accept.</result>
+<usage><subagent_tokens>30867</subagent_tokens><tool_uses>6</tool_uses><duration_ms>49266</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a1b9749e0e9c10543</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a1b9749e0e9c10543.output</output-file>
+<status>completed</status>
+<summary>Agent "Adversarial review diff --strict" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I found no real false pass. Every attempt to sneak a new cycle or violation past `--strict` failed (exit 1, `passed=false`), except one tolerated self-loop case covered in finding 5. There are four real defects, all medium or low, plus one rule edge case. CI's commands are green on this branch: pytest 1399 passed, `ruff check`, the header check, `archy check .` and `archy cycles . --strict`. `tests/test_mcp_protocol.py` also passes (8 tests).
+
+One thing you should know first: `git status` now shows uncommitted edits to `tests/test_cli.py` and `tests/test_mcp.py`. I did not make them; they were already there when I first read the tests (they add a `_snapshot_findings_only` helper). Something else is writing to this checkout.
+
+Fixtures are under `/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/scratchpad/adv521/`, with the shared helper in `/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/scratchpad/lib.sh`.
+
+## Findings
+
+**1. Medium: naming `.archy/baseline.json` explicitly still lets a re-snapshot grandfather a new cycle.**
+- **Code:** `src/archy/cli.py:1064` and `src/archy/mcp.py:1513` only reject a *missing* `--baseline`/`baseline`, not that particular path. The refusal text at `src/archy/ratchet.py:128` then tells the user to write the findings-only file to whatever path they gave, so for a legacy baseline it suggests `--out &lt;x&gt;/.archy/baseline.json`.
+- **Repro (fixture `g1`, `mcp_grand.py`):** add a cycle between `pkg.d` and `pkg.e`, call `archy_snapshot`, then call `archy_diff(path, baseline=".archy/baseline.json", strict=True)`. Output: `strict vs .archy/baseline.json after snapshot: True`. The new cycle passes. On MCP the agent being gated picks this argument, which is exactly the scenario in the second issue comment.
+- **Fix:** in strict mode, refuse a baseline that resolves to `PATH/.archy/baseline.json` on both surfaces, and point the refusal text at `archy-baseline.json`.
+
+**2. Medium: `--findings-only` is not byte-stable when SDP is enabled.**
+- **Code:** `src/archy/diff.py:382` (`_findings_only`) keeps `sdp_violations[].source_instability` and `target_instability`. Those floats change whenever any module's fan-in or fan-out changes, even when no finding changes.
+- **Repro (fixture `s1`, `sdp: {enabled: true}`):** take the snapshot, add an unrelated `u4.py` that imports `pkg.a`, and regenerate. The strict diff passes, but the committed file changes `"source_instability": 0.25` to `0.2`. The existing stability test only edits a docstring, so it can't catch this.
+- **Fix:** drop the instability floats in findings-only mode (strict never reads them), or drop `sdp_violations` from that form entirely, and add a test with SDP enabled.
+
+**3. Low/Medium: `passed` and `reason` are missing from `archy_diff`'s advertised `outputSchema`.**
+- **Cause:** FastMCP builds the schema in validation mode, which leaves out `@computed_field`.
+- **Evidence:** `TypeAdapter(DiffReport|DiffErrorPayload).json_schema(mode="validation")` has no `passed` in `StrictVerdict`; `mode="serialization"` does. `structuredContent` does carry `passed` and `reason` on the wire, and validation still passes because extra properties are allowed. So the gate's main field is undocumented to clients. `archy_check` advertises its `passed` because it is a plain field there.
+- **Fix:** add a schema test, and either emit the serialization-mode schema or make `passed` and `reason` stored fields set at construction time.
+
+**4. Low: the "no baseline" error gives advice that cannot fix the failure.**
+- **Code:** `src/archy/cli.py:1076` says ``run `archy snapshot .` first``; `src/archy/mcp.py:1529` says `call archy_snapshot first`. Both of those write `.archy/baseline.json`, not the committed file.
+- **Repro (fixture `h1`, the hook's exact entry):** `archy diff . --strict --baseline archy-baseline.json` exits 1. Running `archy snapshot .` and retrying gives the same error and exit 1.
+- **Fix:** when strict, or when `--baseline` is given, suggest `archy snapshot --findings-only --out &lt;target&gt;`.
+
+**5. Low (edge of the subset rule): a new self-import in a module whose baseline cycle was broken passes as carried.**
+- **Code:** `src/archy/ratchet.py:149-152`.
+- **Repro (fixture `p1`):** baseline cycle `pkg.a`/`pkg.b`; change to `a` imports `a`, `b` imports nothing. `archy cycles` reports `pkg.a -&gt; pkg.a`, but strict says `PASS ... 1 cycle(s) ... carried` (exit 0). A self-loop on a module outside every baseline cycle does fail (fixture `p1b`, exit 1).
+- **Fix:** if this should fail, treat a singleton current cycle as carried only when that self-edge is in the baseline's cycle edges. Otherwise document it.
+
+**Minor surface inconsistency:** a relative `baseline` is resolved against `path` on MCP (`path / baseline`) but against the working directory on the CLI and Action. An Action with `path: sub` and the default `baseline` reads `./archy-baseline.json`. This fails safe but is confusing.
+
+## What held
+- **Fresh cycles:** a fresh 2-cycle, pulling in an acyclic module, merging two baseline cycles, and renaming every member of a cycle all exit 1 (fixture `r1` shows the rename case, labelled "a cycle among modules the baseline never saw").
+- **Scan root:** snapshot on the project root and diff on `src/` (src layout, `archy.yaml` at the root) still finds the config, matches qualnames and fails on the new violation from both roots (fixture `p2`). Different qualname prefixes can only cause false *fails*.
+- **Config changes:** renaming a layer turns old violations into new ones, which fails safe. Excluding modules or removing rules is a visible config change, so I don't count it.
+- **Legacy and findings-only baselines:** plain `archy diff` (text and JSON) on a baseline with no `modules` key exits 0. Strict on that baseline refuses and exits 1. Plain diff on a findings-only baseline shows "score not in baseline" and exits 0. `simulate` computes its score delta from live snapshots, and nothing else reads a snapshot.
+- **Exit codes and surfaces:** `--format json --strict` exits 1 with `passed: false`. MCP `structuredContent` for a findings-only strict diff validates, with `score_delta: null`, `passed` and `reason` present, and `isError` false. `archy_snapshot` is annotated `readOnlyHint=False, destructiveHint=True`.
+- **Determinism:** module and cycle lists are sorted and SCC membership is deterministic. Paths are only used for display, so Windows separators cannot cause a false fail.
+- **Action and hook:** the Action's `diff` branch quotes `baseline` the same way the existing branches quote `path`, so no new injection surface. The hook entry is correct apart from the error wording in finding 4.
+
+The repo is unchanged by me; I only wrote under the scratchpad.</result>
+<usage><subagent_tokens>115796</subagent_tokens><tool_uses>32</tool_uses><duration_ms>508818</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a7bc5781787149e01</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a7bc5781787149e01.output</output-file>
+<status>completed</status>
+<summary>Agent "R2 no_em_dashes" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review passed with no findings. I searched all 8 files for U+2014 and found no em dashes. I then marked `no_em_dashes--8_files--1ab5ef9ac772` as passed.
+
+The first search used `grep -P` and found nothing. The fallback search for the raw em dash bytes also found nothing, so the zero result doesn't depend on `grep -P` working on this machine.</result>
+<usage><subagent_tokens>17177</subagent_tokens><tool_uses>3</tool_uses><duration_ms>15403</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a38dc175fed8b721b</task-id>
+<tool-use-id>toolu_01EznvjWkwiwhGEaHQHprHDh</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a38dc175fed8b721b.output</output-file>
+<status>completed</status>
+<summary>Agent "R2 py ratchet" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Review passed with zero violations, and I marked `python_code_review--src-archy-ratchet.py--e30e31b57cf3` as passed.
+
+I checked `/Users/hosanglee/archy/src/archy/ratchet.py` against every listed criterion. No line exceeds 100 characters, which I confirmed by running a line-length check on the file.</result>
+<usage><subagent_tokens>21785</subagent_tokens><tool_uses>3</tool_uses><duration_ms>12762</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a04fda97c5d7db2d1</task-id>
+<tool-use-id>toolu_01NKpcrA2L8Nr8hsLU2fwJJN</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a04fda97c5d7db2d1.output</output-file>
+<status>completed</status>
+<summary>Agent "R2 py diff" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review of `/Users/hosanglee/archy/src/archy/diff.py` found no violations, and I marked it as passed.
+
+- **Mechanical checks:** `from __future__ import annotations` is present. Types use PEP 604 syntax. Value objects are frozen pydantic models with tuple fields. Imports are grouped correctly, and no line exceeds 100 characters (I checked with `awk`).
+- **Comments:** The ones I read explain why, not what.
+- **DRY:** The four `_*_set_diff` helpers are structurally similar, but each uses a different identity key, so I did not count them as copy-paste.</result>
+<usage><subagent_tokens>28359</subagent_tokens><tool_uses>3</tool_uses><duration_ms>17057</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>aa614ede085a983e6</task-id>
+<tool-use-id>toolu_01TTiUGVrj6iquq3VPf8o4wh</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/aa614ede085a983e6.output</output-file>
+<status>completed</status>
+<summary>Agent "R2 py test_ratchet" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review of `/Users/hosanglee/archy/tests/test_ratchet.py` found no violations, and I marked it as passed.
+
+- **Type syntax:** `from __future__ import annotations` is present, and the file uses no `typing.List` or `Optional`.
+- **Line length:** a script check found no line over 100 characters.
+- **Value objects and paths:** the file defines no value objects of its own, and it uses no `os.path`.
+- **Imports:** they are grouped correctly.
+- **Naming:** names follow convention, and the private helpers `_cycle` and `_verdict` carry the underscore prefix.
+- **DRY:** the one-line `self_loop = Cycle(...)` construction appears twice, at lines 226 and 236. That is too small to need a shared helper.
+- **Comments:** they explain why, not what.</result>
+<usage><subagent_tokens>23340</subagent_tokens><tool_uses>4</tool_uses><duration_ms>13162</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>adb43c60b98c65794</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/adb43c60b98c65794.output</output-file>
+<status>completed</status>
+<summary>Agent "R2 py mcp" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review of `src/archy/mcp.py` passed with no violations, and I marked it passed.
+
+- **Line length:** no line exceeds 100 characters (checked with a script).
+- **Type syntax and models:** `from __future__ import annotations` is present, the type hints use `X | None` and `list[X]`, and all models are frozen pydantic models with tuple sequence fields.
+- **Style:** `pathlib.Path` is used throughout and the imports are grouped correctly.
+- **Comments:** the ones added by the strict-diff change (`_SNAPSHOT_ANNOTATIONS`, `_run_diff`, the `archy_diff` description) explain why, not what.
+
+**Aside (pre-existing, not part of this changeset):** the module docstring says "The 12 tools", but 13 are registered, because `archy_module_view` is not in the list.</result>
+<usage><subagent_tokens>60548</subagent_tokens><tool_uses>4</tool_uses><duration_ms>19675</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a129d305babe49a00</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a129d305babe49a00.output</output-file>
+<status>completed</status>
+<summary>Agent "R2 py test_cli" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>PASS. `tests/test_cli.py` has no violations against the listed criteria, and I marked review `python_code_review--tests-test_cli.py--fd8976f2a54e` as passed.
+
+- **Type syntax:** `from __future__ import annotations` is present, and the file uses PEP 604 syntax with no `typing.List` or `Optional`.
+- **Naming and paths:** names follow the snake_case, PascalCase and underscore-prefix rules. `pathlib.Path` is used throughout and there is no `os.path`.
+- **Imports:** they are grouped stdlib, third-party, local. The one function-local `import archy.contracts` in `_stub_run_contracts_raising` has its reason stated in the docstring, which the conventions file allows.
+- **Line length:** an `awk` check on the real file found no line over 100 characters.
+- **DRY:** the fixture builders (`_make_two_module_project`, `_snapshot_findings_only`, `_strict`, `_invoke_json`) are already shared helpers. I found no copy-pasted logic that needs extracting.
+- **Comments:** they record why (regression numbers, constraints, fixture intent), not what the code does.
+- **Value objects:** the file defines none, so that bullet does not apply.
+
+The first page of the instruction file stopped at line 1294, so I read the rest of the file from line 1295 to the end.</result>
+<usage><subagent_tokens>66413</subagent_tokens><tool_uses>4</tool_uses><duration_ms>18221</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a6580771c3ce4402c</task-id>
+<tool-use-id>toolu_015xnEWoUUCAHciTBoyogmg9</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a6580771c3ce4402c.output</output-file>
+<status>completed</status>
+<summary>Agent "R2 docs" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>No documentation drift detected. I marked the review as passed.
+
+- **README.md:** The branch already updates it for the changes in `cli.py`, `mcp.py`, `diff.py` and `ratchet.py`. That covers the `archy_diff` strict row, the `readOnlyHint` contract (now with an `archy_snapshot` exception), the Action's `diff` command and `baseline` input, the `archy-no-new-cycles` hook, and the new section on adopting the ratchet.
+- **SKILL.md files:** `skills/archy/SKILL.md` and `plugins/claude/skills/archy/SKILL.md` are byte-identical, and both show the new `archy_diff(path, baseline=None, strict=False)` signature.
+- **Possible drift I left alone:** `docs/LEARNINGS.md:186` says "All tools now declare `readOnlyHint:true`". It is a dated, v0.35-era entry, so I treated it as history rather than drift. `docs/SHIPPED.md:35` is the same kind of historical entry.</result>
+<usage><subagent_tokens>34128</subagent_tokens><tool_uses>7</tool_uses><duration_ms>29338</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>ace6e424c59e8a5fe</task-id>
+<tool-use-id>toolu_019ogoeiLLpcd7LKwWWeT1Yo</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/ace6e424c59e8a5fe.output</output-file>
+<status>completed</status>
+<summary>Agent "R2 parity" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review passed with no findings, and I marked it as passed.
+
+The changeset adds `diff --strict` and its `strict` verdict. I checked it against the three surfaces, and a fourth item, `TOOL_NAMES`:
+
+- **CLI text:** `_diff_to_text` prints `# strict: PASS|FAIL, &lt;reason&gt;`. It also says "score deltas: not available" when the baseline holds findings only.
+- **CLI JSON:** `model_dump_json` of `DiffReport` carries `strict`, because `DiffReport` has a `strict: StrictVerdict | None` field. The CLI exits 1 when the verdict fails.
+- **MCP:** `archy_diff` accepts `baseline` and `strict` and returns the same `DiffReport`. Its description documents both parameters.
+- **Gate fields:** `StrictVerdict.passed` and `StrictVerdict.reason` in `src/archy/ratchet.py` are `@computed_field`, so they survive `model_dump()`. A failed verdict always carries its reason, and a refused baseline counts as a failure.
+- **Refusals:** the CLI raises a usage error and MCP returns a `DiffErrorPayload`. Both refuse a missing `--baseline` and any problem found by `strict_baseline_problem`.
+- **`TOOL_NAMES`:** no new MCP tool was registered, so `src/archy/install/base.py` needs no change.
+
+Two differences are intentional, not bugs:
+
+- **`--findings-only`:** the `snapshot` flag exists on the CLI only. The `archy_diff` description and its strict-baseline error both point to the CLI command for creating the baseline.
+- **`--top-n`:** this flag was already CLI-only and is not part of this change.
+
+I also noted that `archy_snapshot` now has `_SNAPSHOT_ANNOTATIONS` (not read-only), which matches the intent of the change.</result>
+<usage><subagent_tokens>25419</subagent_tokens><tool_uses>5</tool_uses><duration_ms>23656</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a59b40250e09d0276</task-id>
+<tool-use-id>toolu_01Duw5JkpeRFoGWrgwKUzzUi</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a59b40250e09d0276.output</output-file>
+<status>completed</status>
+<summary>Agent "R2 py cli" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I marked the review as passed, but I found one minor DRY issue. I didn't confirm that the helper `default_baseline_path` is equivalent to the literal path it would replace.
+
+**Finding (borderline, not a clear violation)**
+- **Line:** about 1011, in `snapshot` in `/Users/hosanglee/archy/src/archy/cli.py`.
+- **Criterion:** "DRY: no copy-pasted blocks that should be a shared helper".
+- **Construct:** `target = out_path or (path / ".archy" / "baseline.json")`. This change added `default_baseline_path(path)` and used it in `diff`, but `snapshot` still builds the same path inline.
+- **Suggested fix:** use `out_path or default_baseline_path(path)` in `snapshot`.
+
+**What I checked**
+- The criteria I checked were:
+  - `from __future__ import annotations` is present.
+  - There are no `typing.List` or `Optional` usages.
+  - There is no `os.path`.
+  - `ContractsOutcome` is a frozen pydantic `BaseModel`.
+  - No line is over 100 characters (an `awk` check printed nothing).
+  - The new comments explain why, not what.
+- I read the lines changed against `main` directly, plus the first 1,557 lines of the instruction file. I did not read the rest of the 3,751-line file line by line.</result>
+<usage><subagent_tokens>43792</subagent_tokens><tool_uses>4</tool_uses><duration_ms>33036</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>aa046fed76475e111</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/aa046fed76475e111.output</output-file>
+<status>completed</status>
+<summary>Agent "R2 py test_mcp" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review of `/Users/hosanglee/archy/tests/test_mcp.py` found no violations, and I marked it as passed.
+
+I judged only the lines this branch changed, as `.deepwork/review/python_conventions.md` requires. I did not run the linter or the tests.
+
+- **Changed lines:** `git diff main` shows the following, and none of it breaks a listed criterion.
+  - The imports moved to module top.
+  - The annotations test now expects `archy_snapshot` to be the one non-read-only tool.
+  - Some `is not None` guards were added.
+  - The new strict-ratchet tests and the `_write_cyclic_ratchet_project` helper were added.
+- **Comments:** the new and edited comments and docstrings explain why, and the edited annotations comment still matches the code it sits above.
+- **Style:** no line exceeds 100 characters (checked with `awk`), the new code uses pathlib throughout, and there are no new value-object definitions.
+- **Duplication:** the new tests share one fixture helper rather than repeating the setup.</result>
+<usage><subagent_tokens>68078</subagent_tokens><tool_uses>5</tool_uses><duration_ms>29674</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>acacf7b7dbd976019</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/acacf7b7dbd976019.output</output-file>
+<status>completed</status>
+<summary>Agent "R2 structural" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>No structural regressions; blast radius verified via archy. I marked the review as passed.
+
+I did not read the source of the four files or the diff. The verdict rests on archy's own analysis, and the `git diff --name-only` step returned no changed modules. I analysed the four named modules anyway.
+
+**Blast radius (`archy impact . --file &lt;path&gt;`)**
+
+| Module | Transitive dependents | What they are |
+|---|---|---|
+| `archy.cli` | 9 | Test modules only (`tests.test_cli`, `tests.test_conventions`, `tests.test_hotspots`, and others) |
+| `archy.mcp` | 11 | `archy.cli` plus test modules |
+| `archy.diff` | 19 | `archy.cli`, `archy.mcp`, `archy.diff_summary`, `archy.simulate`, `bench.delta_direction`, `bench.simulate_oracle`, plus tests |
+| `archy.ratchet` | 21 | `archy.diff` and everything downstream of it, including `archy.cli`, `archy.mcp`, `archy.diff_summary`, `archy.simulate` and the bench modules |
+
+`ratchet` and `diff` have the widest reach. I did not run `archy affected` for the test-classified view.
+
+**Structural checks**
+- **Cycles:** `archy cycles .` found none.
+- **Layer rules:** `archy check .` found no violations. It does warn that layer coverage is only 10 of 48 modules (21%), so the six `forbid` rules are barely verified by that check.
+- **Edit risk (`what-to-refactor-next . --top 10`):** `cli`, `mcp` and `diff` rank as hotspots (ranks 1, 3 and 6) but with low structural edit-risk of 0.14, 0.11 and 0.14. Regression danger is contained.
+- **`ratchet`:** it did not appear in the top 10.</result>
+<usage><subagent_tokens>20444</subagent_tokens><tool_uses>3</tool_uses><duration_ms>34204</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>ad647346a57be7c49</task-id>
+<tool-use-id>toolu_01MtxXpvEHNhncGp61JF2hnh</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/ad647346a57be7c49.output</output-file>
+<status>completed</status>
+<summary>Agent "R2 adversarial diff --strict" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I found two real defects, both medium. Neither breaks the strict verdict itself, but both bite on a typical first run. I also found five low-severity items. Every repro used fixtures under `/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/scratchpad/adv521r2/` (`p1`, `p2`, `p3`).
+
+**Repo state:** `git status` shows `src/archy/cli.py` and `src/archy/mcp.py` modified in the working tree. I did not make those edits. Both are a one-line change, replacing `path / ".archy" / "baseline.json"` with `default_baseline_path(path)`, so another agent appears to be editing concurrently. I wrote nothing in the repo.
+
+## Medium
+
+**M1. A diff against a findings-only baseline reports every current SDP violation as a new regression, on an unchanged tree.**
+- **Where:** `_findings_only` drops `sdp_violations` (`src/archy/diff.py:436`). `compute_diff` still diffs them against an empty tuple (`diff.py:260`), and `summarize_diff` ranks them as "new SDP violation" items (`diff_summary.py:221`).
+- **Repro:** `p1` has `sdp: {enabled: true, mode: warn}` and two existing SDP violations.
+  ```
+  archy snapshot p1 --findings-only --out p1/archy-baseline.json
+  archy diff p1 --baseline p1/archy-baseline.json --strict
+  ```
+  Output, with no code change in between:
+  ```
+  # summary: score not in baseline; violations +2/-0
+  ## top regressions (risk-weighted):
+    risk=0.40  new SDP violation: app.x (I=0.33) -&gt; app.y (I=0.50)
+    risk=0.35  new SDP violation: app.util (I=0.25) -&gt; app.helper (I=0.50)
+  ...
+  # violations: +0 added, -0 resolved
+  # strict: PASS, no new cycles or layer violations; ...
+  ```
+- **Impact:** the headline says "violations +2" and the last line says "no new ... violations". The `archy-no-new-cycles` hook and the Action print this on every run for any repo with `sdp:` enabled, and plain diff, JSON and MCP `archy_diff` carry the same false items. The README says only that the file has no SDP violations, not that diff will then report all of them as new.
+- **Fix:** when the baseline carries no SDP data (score is None is the existing signal, or add an explicit marker), skip the SDP set diff, mark it "not recorded in baseline" in text, JSON and summary, and keep it out of regressions and the headline. Pin it with a test: findings-only baseline plus unchanged tree gives zero summary regressions.
+
+**M2. The missing-baseline hint drops PATH, so following it with Action `path: src` builds the wrong baseline and the gate fails on day one.**
+- **Where:** `missing_baseline_hint` (`diff.py:289-295`), the `strict_baseline_problem` text (`diff.py:280`) and the CLI usage error all suggest `archy snapshot --findings-only --out X` with no path argument.
+- **Repro:** `p2` has the package and `archy.yaml` under `src/` and an unrelated `tools/` cycle at the root.
+  ```
+  cd p2; archy diff src --strict --baseline archy-baseline.json
+  Error: no baseline at archy-baseline.json; create it with `archy snapshot --findings-only --out archy-baseline.json`.
+  archy snapshot --findings-only --out archy-baseline.json   # hint, literally: snapshots "."
+  archy diff src --strict --baseline archy-baseline.json
+  # strict: FAIL, 1 new finding(s); 1 cycle(s) and 0 violation(s) carried ...
+    new layer violation (core -&gt; ui): app.core -&gt; app.ui.view at app/core.py:1
+  ```
+- **Why it fails:** from `.`, `archy.yaml` in `src/` is not discovered, so the baseline records zero violations. The pre-existing violation then reads as new. The baseline also grandfathers the `tools/` cycle, which is outside the gated tree.
+- **Fix:** have the hint name both the path and the target: `archy snapshot {path} --findings-only --out {target}`.
+
+## Low
+
+- **L1. CLI and MCP resolve the same relative `baseline` differently.** The CLI resolves it against cwd; MCP resolves it against `path` (`mcp.py:1528`). The MCP behaviour is documented. With `path=.../p2/src` and `baseline="archy-baseline.json"`, the CLI passes and MCP returns `no baseline at .../p2/src/archy-baseline.json; create it with ... --out .../p2/src/archy-baseline.json`. That hint creates a second baseline that drifts from the committed one. Fix: say "relative to `path`" in the MCP error, or resolve against the repo root.
+
+- **L2. The default-file refusal can be bypassed by a case-variant path or a hard link.** It is bypassed on both CLI and MCP.
+  - What it catches: `.archy/baseline.json`, `./.archy/../.archy/baseline.json`, absolute paths, symlinks, and `../.archy/baseline.json` from a subdirectory.
+  - What passes: `--baseline .ARCHY/Baseline.JSON` and `ln .archy/baseline.json hard.json` both return `strict: PASS`. MCP behaves the same way: `_run_diff(... baseline='.ARCHY/baseline.json', strict=True)` returns a DiffReport.
+  - The hard link keeps tracking every `archy_snapshot`, because the write truncates the same inode.
+  - Realism: an agent is unlikely to hit either by accident; each takes a deliberate odd step.
+  - Fix: in `diff.py:280`, also test `target.exists() and default.exists() and os.path.samefile(target, default)`.
+
+- **L3. If `archy.yaml` is deleted or moved out of the discovery walk, strict passes silently and drops the recorded violations.** `p3` repro: the baseline records 1 violation. Moving `archy.yaml` away and adding a new `core -&gt; ui` import gives `strict: PASS ... 1 cycle(s) and 0 violation(s) carried`. The baseline's violation just vanishes from the count, and nothing says the rules were not evaluated. It is visible in review, but it is a rule set that cannot fire reading as clean. Fix: refuse, or at least warn, when the baseline has violations and no config was found now.
+  - The reverse case (baseline taken before `archy.yaml` existed) fails, which is the safe direction. Its reason ("new layer violation") gives no hint that the baseline predates the rules.
+
+- **L4. `required_violations` in the committed file is not stable across machines.** With an unparseable `pyproject.toml`, the stored `detail` holds an absolute path (`entrypoints could not be fully derived: /private/tmp/.../p1/pyproject.toml could not be read...`). The text also changes when entrypoint reasons change. Strict never reads this field. Fix: drop `detail`, or drop `required_violations` entirely, in `_findings_only`.
+
+- **L5. A corrupt committed baseline gives a raw traceback.** This is pre-existing in `read_snapshot` (`diff.py:240`), but a committed, hand-regenerated file makes it newly likely, for example after a merge conflict. Merge-conflict markers raise `JSONDecodeError`; a cycle missing `edges` raises `KeyError: 'edges'`. The exit is non-zero, so it fails safe, but the message is not actionable. File it separately rather than folding it in.
+
+## What held
+
+- Strict verdict and refusal:
+  - `strict_baseline_problem` catches symlinks, `..` paths, absolute paths and cwd-relative paths on the CLI.
+  - Strict with no `--baseline` refuses on both surfaces.
+  - A baseline with no `modules` list is refused.
+  - A baseline that does not exist gives an actionable error and exits 1, which covers the hook's first run.
+- File and diff mechanics:
+  - Plain diff against a findings-only file does not churn violations or `required_violations`: both are keyed without `lines` or `detail`.
+  - Findings-only output is sorted, line-free and ends with a newline.
+- `modules` list:
+  - It includes packages and test modules (`tests` 69, `archy` 48, `bench` 36 of 153 on archy itself).
+  - A stale list only grows the diff on regeneration; it does not affect verdicts.
+  - Moving an acyclic module into a tangle by renaming it passes, which matches the documented "renames pass" design.
+- Cycle logic:
+  - `find_cycles` returns every intra-SCC edge, self-loops included, so the self-edge and closing-edge logic has complete data.
+  - Merges and acyclic modules pulled into a cycle are flagged with the correct closing edges.
+- Tooling:
+  - `uv run ty check` passes.
+  - The optional `score_delta` has no unguarded consumer in `src/`; the bench callers use live snapshots.
+- Action and hook:
+  - The Action `diff` branch passes `--strict` correctly, and `strict: false` degrades to a plain diff.
+  - The hook entry works from the repo root.</result>
+<usage><subagent_tokens>109527</subagent_tokens><tool_uses>29</tool_uses><duration_ms>258593</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a3c7acbd9110d7a78</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a3c7acbd9110d7a78.output</output-file>
+<status>completed</status>
+<summary>Agent "R3 no_em_dashes" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review passed with no findings. I searched all six files for U+2014 and found no occurrences:
+
+- `src/archy/cli.py`
+- `src/archy/diff.py`
+- `src/archy/mcp.py`
+- `src/archy/ratchet.py`
+- `tests/test_cli.py`
+- `tests/test_mcp.py`
+
+I marked `no_em_dashes--6_files--5686860ee299` as passed.</result>
+<usage><subagent_tokens>17025</subagent_tokens><tool_uses>3</tool_uses><duration_ms>8943</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a6e5c95c97134a756</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a6e5c95c97134a756.output</output-file>
+<status>completed</status>
+<summary>Agent "R3 py diff" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>**Verdict: FAIL.** There is one violation in `/Users/hosanglee/archy/src/archy/diff.py`. I did not call `mark_review_as_passed`.
+
+**Violation**
+1. **Line 342** (also the `import os` on line 82).
+2. **Criterion violated:** "`pathlib.Path` over `os.path`".
+3. **Offending construct:** `same = os.path.samefile(target, default)`. This is the only use of `os` in the module.
+4. **Suggested fix:** Use `same = target.samefile(default)`. `Path.samefile` does the same comparison, and the `target.exists() and default.exists()` guard on line 341 already covers its requirement that both files exist. Then delete `import os`. The comment on lines 339-340 can say `Path.samefile` instead of `samefile`.
+
+**Criteria that pass**
+- `from __future__ import annotations` is present.
+- Type syntax is PEP 604, with no `typing.List` or `Optional`.
+- Naming follows the conventions.
+- Value objects are frozen pydantic models with tuple fields.
+- Imports are grouped correctly.
+- No line exceeds 100 characters (checked with awk).
+- I found no copy-pasted blocks that should be a shared helper.
+- The comments I read explain why rather than what.</result>
+<usage><subagent_tokens>29048</subagent_tokens><tool_uses>2</tool_uses><duration_ms>11997</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a9865230dab77516e</task-id>
+<tool-use-id>toolu_01GCTDKNFfuPuN4ZtxTTagMy</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a9865230dab77516e.output</output-file>
+<status>completed</status>
+<summary>Agent "R3 py ratchet" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review of `/Users/hosanglee/archy/src/archy/ratchet.py` found no violations, and I marked it as passed.
+
+I checked it against all the listed criteria. A line-length check found no line over 100 characters, and the other criteria all held.
+
+One thing is outside the criteria and I did not count it: `module_paths_for(graph, root)` has no type annotation on `graph`. I did not check whether it is pre-existing, so treat it as a possible follow-up rather than a finding.</result>
+<usage><subagent_tokens>23310</subagent_tokens><tool_uses>3</tool_uses><duration_ms>9774</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a8260df61f02a5706</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a8260df61f02a5706.output</output-file>
+<status>completed</status>
+<summary>Agent "R3 py cli" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>Review passed with zero violations for `/Users/hosanglee/archy/src/archy/cli.py`, and I marked it as passed.
+
+I read the first 1,559 lines of the instruction file, which holds the first part of `cli.py`. I checked the rest of the file with commands run against it directly.
+
+- **Module-wide checks:** `from __future__ import annotations` is present at line 13. There is no `Optional`, `List`, `Dict`, `os.path` or `@dataclass`. The only line-length hits (over 100 characters) are none, since no line exceeds 100.
+- **Branch diff against `main`:** I read the whole diff. The new `--strict` and `--findings-only` options, the `diff` command changes and the `_diff_to_text` additions all follow the conventions. The new comment in `diff` explains why (a re-snapshot would overwrite `.archy/baseline.json` and so grandfather a new cycle). I found no copy-pasted block.
+- **Not checked line by line:** the unchanged parts of the file, which I treated as already conforming.</result>
+<usage><subagent_tokens>43529</subagent_tokens><tool_uses>4</tool_uses><duration_ms>15820</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a3752813ac39bb2e2</task-id>
+<tool-use-id>toolu_01A717ckBkxgPRBBoMynKRDd</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a3752813ac39bb2e2.output</output-file>
+<status>completed</status>
+<summary>Agent "R3 parity" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The review passed with no findings, and I marked it as passed.
+
+- **`strict` gate on `diff`:** The CLI text helper `_diff_to_text` prints a `# strict: PASS/FAIL, &lt;reason&gt;` line. The CLI JSON output is `DiffReport.model_dump_json`. The MCP `archy_diff` tool returns the same `DiffReport` model, which carries the `strict` field. The CLI JSON and MCP surfaces therefore cannot drift apart.
+- **`passed` and `reason`:** Both are `@computed_field` on `StrictVerdict` in `src/archy/ratchet.py`, so `model_dump()` includes them. A failing verdict always carries a reason, including the `refused` case where the baseline cannot support a verdict.
+- **Related fields:** `baseline_findings_only` and a nullable `score_delta` are also on `DiffReport`, and the CLI text handles both. The MCP surface gets them through the same model.
+- **Input parity:** MCP `archy_diff` gained `baseline` and `strict` parameters. Both surfaces reject strict mode without a committed baseline, and both call `strict_baseline_problem`.
+- **`TOOL_NAMES`:** No tool was added, and `src/archy/install/base.py` is unchanged in the diff, so the pinned tuple stays correct.
+- **Intentional omission:** `snapshot --findings-only` exists only on the CLI. The MCP `archy_snapshot` tool has no equivalent, and its error text sends the user to the CLI command. I treated that as a deliberate choice, since it keeps the committed baseline separate from the file `archy_snapshot` overwrites.
+- **Exit code:** The non-zero exit on a failed strict diff is CLI-only, which is inherent. On MCP the signal is `strict.passed`.
+
+I read the diff of `src/archy/cli.py` and `src/archy/mcp.py` against `main`, plus `src/archy/diff.py`, `src/archy/ratchet.py` and `src/archy/install/base.py`. I did not read the tests, so I did not check whether any of them assert against the serialized form.</result>
+<usage><subagent_tokens>25917</subagent_tokens><tool_uses>5</tool_uses><duration_ms>19686</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a4ffd5eda7144cc6b</task-id>
+<tool-use-id>toolu_015hHjGkYkjS35VbcDUoMYnm</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a4ffd5eda7144cc6b.output</output-file>
+<status>completed</status>
+<summary>Agent "R3 docs" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>No documentation drift detected. I marked the review as passed.
+
+I read the diff against `main` for `cli.py`, `mcp.py`, `diff.py` and `ratchet.py`. I compared it with the docs that describe it, not all of the listed docs.
+
+- **README:** `/Users/hosanglee/archy/README.md` already describes `diff --strict`, `snapshot --findings-only`, the `archy-no-new-cycles` hook, the `archy_diff(baseline, strict)` MCP signature and the refusal of `.archy/baseline.json`. It also notes that `archy_snapshot` is the one tool not annotated read-only.
+- **Skill files:** `/Users/hosanglee/archy/skills/archy/SKILL.md` and `/Users/hosanglee/archy/plugins/claude/skills/archy/SKILL.md` are byte-identical. Both list `archy_diff(path, baseline=None, strict=False)`.
+- **Other config:** `/Users/hosanglee/archy/action.yml` and `/Users/hosanglee/archy/.pre-commit-hooks.yaml` match too.
+
+I did not check the `docs/research/*.md` and `bench/*.md` write-ups. I only spot-checked `docs/ROADMAP.md`, `docs/FUTURE.md` and `docs/SHIPPED.md`, and found no stale claims there.</result>
+<usage><subagent_tokens>31349</subagent_tokens><tool_uses>7</tool_uses><duration_ms>30686</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a08a7e788918b867c</task-id>
+<tool-use-id>toolu_01T5yYuWCxbFmtyD7EiaCWxA</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a08a7e788918b867c.output</output-file>
+<status>completed</status>
+<summary>Agent "R3 py mcp" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>**Verdict: FAIL.** I found two violations. I also marked the review as passed by mistake, and that needs correcting.
+
+**Mistake.** I called `mark_review_as_passed` for `python_code_review--src-archy-mcp.py--0d74b124178d` after finding violations. It should not have been marked, so please treat that mark as invalid and clear or re-run it. I have no tool to undo it.
+
+**Violations in `/Users/hosanglee/archy/src/archy/mcp.py`:**
+
+1. **Module docstring, lines 5-12.** This breaks the criterion "Comment accuracy: every comment must explain WHY…". The docstring says "The 12 tools" and lists 12 names. The file registers 13 tools (`grep -c 'name="archy_'` returns 13), and `archy_module_view` is missing from the list.
+   - **Fix:** change it to 13 and add `archy_module_view`. Or drop the count and the enumeration, since the tool decorators already list them.
+
+2. **Lines 1479, 1735, 1739, 1743, 1745, 1751.** This breaks the criterion "DRY: no copy-pasted blocks that should be a shared helper". The sort key `lambda t: (-t[1], t[0])` (score descending, then name) is repeated six times, in `_build_invariant_brief` and `_run_graph_summary`.
+   - **Fix:** add one helper, for example `_ranked(items) -&gt; list[tuple[str, float]]`, that sorts by `(-value, name)`. Call it from all six sites.
+
+**Criteria that passed:**
+- `from __future__ import annotations` is present at the top.
+- PEP 604 types are used throughout, with no `Optional` or `typing.List`.
+- All value models use `ConfigDict(frozen=True)` and tuple sequence fields.
+- `pathlib.Path` is used, with no `os.path`.
+- Imports are grouped correctly.
+- No line is over 100 characters (checked with awk).
+- Naming follows the conventions.
+
+**Ambiguity:** the instruction file embeds a different snapshot of `mcp.py` than the file on disk. The snapshot has `from __future__` at line 145 and the disk file has it at line 100. I reviewed the on-disk file, and the snapshot's docstring shows the same defect. I read the snapshot only to line 1401 and the on-disk file to the end, so any difference in the snapshot's last 940 lines would not be covered.</result>
+<usage><subagent_tokens>62137</subagent_tokens><tool_uses>7</tool_uses><duration_ms>29654</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a28449fa2c9e71c7d</task-id>
+<tool-use-id>toolu_01AiqUD695r9S2GquZ797qee</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a28449fa2c9e71c7d.output</output-file>
+<status>completed</status>
+<summary>Agent "R3 py test_cli" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>**Verdict: FAIL.** There is one non-blocking DRY finding. I did not call `mark_review_as_passed`.
+
+The changeset adds 244 lines to `tests/test_cli.py` and removes none. I reviewed only those additions, per the scope rule in `.deepwork/review/python_conventions.md`.
+
+**Finding (non-blocking)**
+1. **Lines 2379-2381 and 2404-2406.**
+   - **Criterion:** "DRY: no copy-pasted blocks that should be a shared helper".
+   - **Offending construct:** Two new tests build the same SDP-enabled ratchet fixture with identical statements:
+     ```python
+     (project / "archy.yaml").write_text("layers: {}\nforbid: []\nsdp: {enabled: true}\n")
+     (project / "pkg" / "d.py").write_text("import pkg.e\n")
+     (project / "pkg" / "e.py").write_text("import pkg.a\nimport pkg.b\n")
+     ```
+     Both then snapshot to `full.json` and assert that `sdp_violations` is non-empty. Lines 2385-2390 and 2407-2409 do this with different assertion formatting.
+   - **Why it matters:** The repeated fact is "this tree carries an SDP violation". A change to that fixture has to be made in both places. That is the same logic, not just similar shape.
+   - **Fix:** Extract a helper such as `_make_sdp_ratchet_project(tmp_path) -&gt; Path`. It would call `_make_ratchet_project`, write the three lines above, snapshot to `full.json`, assert `sdp_violations` is non-empty, and return the project. Both `test_findings_only_snapshot_is_stable_when_sdp_ratios_move` and `test_diff_against_a_findings_only_baseline_does_not_invent_sdp_regressions` would then call it.
+
+**Checks that passed**
+- `from __future__ import annotations` is present, and all type syntax is PEP 604 (`float | None`, `list[str]`); there is no `typing` import.
+- Naming is correct.
+- No `os.path` is used, only `pathlib`.
+- Imports are grouped stdlib, third-party, local.
+- No line exceeds 100 characters (an awk check over the file reported none).
+- The frozen-pydantic criterion does not apply, because there are no value-object classes in this file.
+- The added comments and docstrings explain why, not what, and I found none that are now false.
+
+The file is `/Users/hosanglee/archy/tests/test_cli.py`.</result>
+<usage><subagent_tokens>68998</subagent_tokens><tool_uses>5</tool_uses><duration_ms>32021</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a6048397916ef4021</task-id>
+<tool-use-id>toolu_01AvLqUALFmuKoFtU4Fi79cS</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a6048397916ef4021.output</output-file>
+<status>completed</status>
+<summary>Agent "R3 py test_mcp" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I found one violation and called `mark_review_as_passed` anyway, which was a mistake. The review should be treated as failed, not passed. The server accepted the call, so the pass is recorded, and the finding below is still open.
+
+**Violation**
+1. **Lines 2185-2187 and 2213-2215** (`tests/test_mcp.py`).
+2. **Criterion violated:** "DRY: no copy-pasted blocks that should be a shared helper".
+3. **Construct:** Two tests in this changeset repeat the same three steps verbatim.
+   - They write `import pkg.e` to `d.py`.
+   - They write `import pkg.d` to `e.py`.
+   - They call `_run_snapshot(project)` to re-snapshot with the new cycle.
+
+   The tests are `test_run_diff_strict_is_not_grandfathered_by_a_resnapshot` and `test_run_diff_strict_refuses_the_default_snapshot_file`.
+4. **Fix:** Add a helper next to `_write_cyclic_ratchet_project`, for example `_add_cycle_and_resnapshot(project)`. It should hold the three steps and carry the "agent re-snapshots after adding a cycle" explanation once. Both tests then call it.
+
+**Checked, no violations**
+- `from __future__ import annotations` is present.
+- Type syntax is PEP 604, with no `typing.List` or `Optional`.
+- Naming is correct.
+- There are no `os.path` calls or dataclasses.
+- Import grouping is correct.
+- No line exceeds 100 characters (checked with `awk`).
+
+I limited the review to the changeset, per `.deepwork/review/python_conventions.md`. The file is `/Users/hosanglee/archy/tests/test_mcp.py`.</result>
+<usage><subagent_tokens>66335</subagent_tokens><tool_uses>5</tool_uses><duration_ms>32718</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>af7346a2b20d10ce9</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/af7346a2b20d10ce9.output</output-file>
+<status>completed</status>
+<summary>Agent "R3 structural" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>No structural regressions; blast radius verified via archy. I marked the review as passed.
+
+**Blast radius** (`uv run archy impact . --file &lt;path&gt;`):
+
+| Module | Transitive dependents | Notes |
+|---|---|---|
+| `archy.cli` | 9 | All are tests. |
+| `archy.diff` | 19 | Includes `archy.cli`, `archy.mcp`, `archy.diff_summary`, `archy.simulate`, `bench.delta_direction` and `bench.simulate_oracle`. |
+| `archy.mcp` | 11 | Includes `archy.cli`. |
+| `archy.ratchet` | 21 | The new module. |
+
+**Tests** (`uv run archy affected . src/archy/ratchet.py`): 14 tests are affected, including `tests.test_cli` and `tests.test_diff`.
+
+**Structural checks:**
+- `uv run archy cycles .` found no cycles.
+- `uv run archy check .` found no layer violations. Layer coverage is thin (10 of 48 modules, 21%), so that result says little. The `archy check` output also notes that 6 forbid rules are declared but this check governs too little of the graph to verify them.
+- `uv run archy what-to-refactor-next . --top 10` lists three of the changed modules as hotspots: `archy.cli` (#1, priority 1.637), `archy.mcp` (#3, 0.770) and `archy.diff` (#6, 0.654). That calls for extra scrutiny, and this change carries a large test net (new or extended tests in `tests/test_cli.py`, `tests/test_diff.py`, `tests/test_diff_summary.py`, `tests/test_mcp.py` and `tests/test_ratchet.py`). I did not review those tests for whether they can fail.
+
+**Three-surface check:** I only grepped for `--strict` and `strict` in `src/archy/cli.py` and `src/archy/mcp.py`. The `diff --strict` option is wired in the CLI (`src/archy/cli.py:1050` and `:1058`). On MCP, `src/archy/mcp.py:976-984` runs `_run_diff(..., strict=strict)`. Both import `strict_verdict` and `strict_baseline_problem` from the new `ratchet` module. I did not read the text or JSON renderers or run the tests.</result>
+<usage><subagent_tokens>21969</subagent_tokens><tool_uses>4</tool_uses><duration_ms>35793</duration_ms></usage>
+</task-notification>
