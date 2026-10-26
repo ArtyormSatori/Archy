@@ -5,6 +5,7 @@ from pathlib import Path
 from archy.diff import compute_diff, take_snapshot
 from archy.diff_summary import summarize_diff
 from archy.graph import build_graph
+from archy.layers import ReachViolation, RequiredRule
 
 
 def _make_clean(tmp_path: Path) -> Path:
@@ -167,3 +168,25 @@ def test_layer_violation_prompt_names_the_forbidden_boundary(tmp_path: Path):
     [v_item] = [it for it in summary.top_regressions if it.kind == "violation_added"]
     assert "core -> cli" in v_item.prompt
     assert "?" in v_item.prompt
+
+
+def test_dead_entrypoints_rule_is_named_with_its_scope_and_cause(tmp_path: Path):
+    """A dead rule has no module, so the summary names the rule, `within`
+    included (two scoped rules would otherwise read alike), and gives the
+    detail as the cause. "No longer reaches" would send the reader looking for
+    a removed import when the cause is a config or pyproject problem."""
+    project = _make_clean(tmp_path)
+    graph = build_graph(project)
+    baseline = take_snapshot(graph)
+    rule = RequiredRule(source="@entrypoints", must_reach="pkg.b", within="app.**")
+    dead = ReachViolation(rule=rule, module=None, detail="pyproject.toml could not be read")
+    current = baseline.model_copy(update={"required_violations": (dead,)})
+
+    summary = summarize_diff(compute_diff(baseline, current), graph)
+
+    [item] = [i for i in summary.top_regressions if i.kind == "required_reach_violation_added"]
+    assert item.description == (
+        "required-reach rule can no longer be checked "
+        "(@entrypoints within app.** must reach pkg.b): pyproject.toml could not be read"
+    )
+    assert "bootstrap import" not in item.prompt

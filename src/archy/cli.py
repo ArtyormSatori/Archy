@@ -2190,6 +2190,7 @@ def _reach_violations_to_json(violations: list[ReachViolation]) -> list[dict]:
                 "source": v.rule.source,
                 "must_reach": v.rule.must_reach,
                 "reason": v.rule.reason,
+                "within": v.rule.within,
             },
             "module": v.module,
             "detail": v.detail,
@@ -2211,9 +2212,9 @@ def _reach_violations_to_text(
     lines = [f"# {len(violations)} required-reach violation(s)"]
     current: tuple[str, str] | None = None
     for v in violations:
-        pair = (v.rule.source, v.rule.must_reach)
+        pair = (v.rule.describe_source(), v.rule.must_reach)
         if pair != current:
-            header = f"\n{v.rule.source} must reach {v.rule.must_reach}:"
+            header = f"\n{v.rule.describe_source()} must reach {v.rule.must_reach}:"
             if v.rule.reason:
                 header += f"\n  reason: {v.rule.reason}"
             lines.append(header)
@@ -2745,7 +2746,11 @@ def _diff_to_text(result: DiffReport) -> str:
         for v in reach.added:
             lines.append(f"  + {v.detail}")
         for v in reach.resolved:
-            lines.append(f"  - {v.module or v.rule.source} now reaches {v.rule.must_reach}")
+            if v.module is None:
+                rule = f"{v.rule.describe_source()} must reach {v.rule.must_reach}"
+                lines.append(f"  - rule can be checked again: {rule}")
+            else:
+                lines.append(f"  - {v.module} now reaches {v.rule.must_reach}")
     return "\n".join(lines)
 
 

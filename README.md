@@ -559,6 +559,20 @@ This came from a production incident: 34 command modules run standalone, each ne
 
 Be honest about what this does: archy cannot *derive* such a requirement (that is framework semantics, not graph structure). Someone has to know the constraint and write it down. What the rule then does is find every other module that violates it and stop the next edit from undoing the fix -- a ratchet, not a detector.
 
+**Derived entrypoints (`source: "@entrypoints"`).** A glob covers the entrypoints its author knew about. A script added later outside it (`app/worker.py` next to `app/commands/`) is not governed, and that is exactly the module most likely to miss the bootstrap import. `@entrypoints` binds the modules archy derives as runnable instead:
+
+```yaml
+required:
+  - source: "@entrypoints"
+    within: "app.**"          # optional: keep only entrypoints matching this
+    must_reach: app.core.database.model_registry
+    reason: standalone entrypoints need the full mapper registry
+```
+
+An entrypoint is a module with a top-level `if __name__ == "__main__":` guard (parenthesized or `and`-combined forms count), a `__main__.py`, or a target of `[project.scripts]`, `[project.gui-scripts]` or `[tool.poetry.scripts]`. Script targets are read from every `pyproject.toml` between a scanned module and the repository root (the nearest directory holding `.git`, `.hg`, `.jj`, `.svn` or `.sl`; with none, nothing above the scanned directory is read), so `archy check src` sees what the project root declares and each monorepo sub-project contributes its own. Each violation says which of these made the module an entrypoint. Derivation finds every runnable file, guarded test modules and one-off scripts included, so most rules want `within:` to scope it to the part of the tree that carries the obligation; `within` is rejected on any other `source`, where editing the pattern does the same job.
+
+A rule that derives nothing is reported as a violation. So is a `pyproject.toml` that cannot be parsed, since dropping its script targets would let the rule pass over the modules they name. A script target that matches no scanned module (an `exclude:`d directory, a re-exported third-party tool) is skipped; under a namespace package without `__init__.py`, `acme.tool.cli` is matched to the `tool.cli` archy scanned. Not read: `setup.py` and `setup.cfg` `console_scripts`, and `.py` files that sit outside every package, which have no module name in archy's graph.
+
 **Excluding directories.** Add an optional `exclude:` list of directory basenames to skip codegen output, vendored code, etc. Each name is matched anywhere in the project tree (same mechanism as the built-in skips for `.venv`, `node_modules`, `__pycache__`):
 
 ```yaml

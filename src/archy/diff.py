@@ -265,6 +265,7 @@ def _reach_violation_to_dict(v: ReachViolation) -> dict[str, object]:
             "source": v.rule.source,
             "must_reach": v.rule.must_reach,
             "reason": v.rule.reason,
+            "within": v.rule.within,
         },
         "module": v.module,
         "detail": v.detail,
@@ -379,6 +380,7 @@ def _reach_violation_from_dict(d: dict[str, object]) -> ReachViolation:
             source=str(rule["source"]),
             must_reach=str(rule["must_reach"]),
             reason=str(rule.get("reason", "")),
+            within=None if rule.get("within") is None else str(rule["within"]),
         ),
         module=None if module is None else str(module),
         detail=str(d["detail"]),
@@ -434,14 +436,22 @@ def _reach_violation_set_diff(
 ) -> ReachViolationSetDiff:
     # Identity is (rule, offending module). `detail` is derived text, so keying
     # on it would make a reworded message read as resolved-plus-added.
-    def _key(v: ReachViolation) -> tuple[str, str, str]:
-        return (v.rule.source, v.rule.must_reach, v.module or "")
+    def _key(v: ReachViolation) -> tuple[str, str, str, str]:
+        return (v.rule.source, v.rule.within or "", v.rule.must_reach, v.module or "")
 
     baseline_keys = {_key(v) for v in baseline}
     current_keys = {_key(v) for v in current}
+    # A rule that is dead NOW (one `module=None` row) evaluated no module, so
+    # its baseline failures are unknown, not fixed. Reporting them as resolved
+    # would tell the reader an unreadable pyproject.toml repaired the code. The
+    # reverse needs no guard: a rule coming back to life reports its failures as
+    # added, which over-reports and is the safe direction.
+    dead_now = {_key(v)[:3] for v in current if v.module is None}
     return ReachViolationSetDiff(
         added=tuple(v for v in current if _key(v) not in baseline_keys),
-        resolved=tuple(v for v in baseline if _key(v) not in current_keys),
+        resolved=tuple(
+            v for v in baseline if _key(v) not in current_keys and _key(v)[:3] not in dead_now
+        ),
     )
 
 
