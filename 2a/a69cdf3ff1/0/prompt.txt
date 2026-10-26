@@ -1,0 +1,291 @@
+lets do deep research to add more features to archy. REserach the internet for new tools, new white papers, and new trends in LLM generated code and the impact on software architecture
+
+---
+
+ralphloop the research. Create new tickets and label them accordingly. Let's create some more tickets for "good first issues" as well
+
+---
+
+<task-notification>
+<task-id>ae3202fa6b985dfc6</task-id>
+<tool-use-id>toolu_018z86bubPbFSUGpGhHE8Bgc</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/ae3202fa6b985dfc6.output</output-file>
+<status>completed</status>
+<summary>Agent "Architecture tools landscape for agents" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I've saved the notes to `/Users/hosanglee/archy/research_notes/LLM code and software architecture/tools_landscape.md`, organised by your four questions. The most important finding is that SonarQube now does layer-style architecture rules for Python, free, and lets agents read them over MCP. Star counts below are from GitHub on 2026-10-26; every claim in the notes has a link, and vendor-only numbers are marked as such.
+
+**Main findings**
+- **SonarQube is now the closest competitor to `archy check`.** Its architecture management covers Python, Java, C#, JS and TS:
+  - You define an allowed architecture (anything not allowed is forbidden), mark which parts of a component may be reached from outside, and violations become issues that block via quality gates.
+  - Sonar can generate a first draft of the allowed architecture from the code as it is.
+  - It is free on all SonarQube Cloud plans since 2026-03-19, and in SonarQube Server since 2026.4.
+  - Its MCP server (v1.30, 2026-10-23) has architecture tools, including one that rewrites the allowed model with a dry run. Limits: views are capped at 150 nodes, editing the model is Cloud-only, and Python agents get only the read tools.
+  - The Sonar sources conflict on cost: the feature is "on all plans", but the MCP README says the architecture tools need the Team or Enterprise plan on Cloud.
+- **Two code-graph MCP servers now outnumber Aider on stars.** GitNexus has 48.0k stars and a noncommercial license; codebase-memory-mcp has 47.5k and is MIT. Between them they offer:
+  - change impact from a git diff, with a risk rating
+  - Cypher-style graph queries and a diff between two snapshots of the graph
+  - hotspots and clusters
+  - architecture decision records that agents can read and edit over MCP (codebase-memory-mcp)
+  - installers that also add hooks and skills (codebase-memory-mcp covers 45 clients).
+
+  None of them was found to ship layer rules with a pass/fail verdict, cycle gates, a DSM, co-change from git history, or trends over time. That is still archy's own ground.
+- **CodeScene** now has an MCP server with Code Health tools for review, pre-commit and pre-push. Its pitch is "a deterministic gate the agent can't negotiate", and its accuracy figures are its own.
+- **Moderne** has an MCP server built on OpenRewrite. Its own docs call it experimental and say agents don't call its tools consistently.
+- **Tach** moved to `tach-org` and is maintained by the community since Gauge stopped working on it. Releases are maintenance-only, and some commands depend on a closed Gauge API that is expected to shut down.
+- **import-linter** added no new contract type in 2026; its last two arrived in late 2025.
+- **The other boundary linters** (dependency-cruiser, ArchUnit, deptrac, Packwerk) are active but have nothing for agents. Sheriff is the one exception: it added an AGENTS.md.
+- **Two tools are cutting their MCP tool lists.** Nx now hides most of its tools by default in favour of skills, and Serena 2.0 replaced most of its tools with a single code-execution interface (and moved to GPL). That suggests a long tool list is now seen as a cost.
+- **LLM code reviewers.** Only Sonar and CodeScene apply fixed, repeatable design checks. CodeRabbit, Greptile and Bugbot check architecture only through plain-English rule files given to an LLM, and Greptile's rules can't block a merge. Teams are starting to point all three at one shared REVIEW.md file.
+- **Agent guardrails.** AGENTS.md has been a Linux Foundation standard since 2025-12-09 (60k+ adopting projects, OpenAI's figure). Claude Code's `PreToolUse` hook can block a tool call. Most tools in this space now have a one-command setup that writes AGENTS.md, MCP config, skills and hooks together.
+- **Aider** hasn't been pushed to since 2026-05-22, so its repo map is a stale reference point.
+
+**Ideas this suggests for archy**
+- A rule that a package may only be imported through its public facade. Sonar, Tach and import-linter all ship this.
+- Generating draft rules from the current import graph.
+- Incremental adoption (leave some modules unchecked) and marking individual dependencies as deprecated, both from Tach.
+- Architecture decision records linked to the archy rule that enforces each one. No tool found does this.
+- Hook or skill installation alongside the MCP wiring. Given archy's six null results on pushing facts at the model, a blocking hook (enforcement) fits the evidence better than another way of injecting context.
+- Writing archy findings into the REVIEW.md or AGENTS.md files that LLM reviewers already read.
+
+**Not checked (listed as gaps in the notes):** Structure101/Sonargraph, Lattix, NDepend, jQAssistant, Sourcegraph/Amp, Qodo Merge, Graphite, Copilot code review, Cursor rules and hooks, and Sonar's AI Code Assurance details. I ran out of research budget before reaching these.</result>
+<usage><subagent_tokens>113764</subagent_tokens><tool_uses>23</tool_uses><duration_ms>238336</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a15aa68c1a5052a6e</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a15aa68c1a5052a6e.output</output-file>
+<status>completed</status>
+<summary>Agent "Practitioner trends AI architecture" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I've saved the notes to `/Users/hosanglee/archy/research_notes/LLM code and software architecture/practitioner_trends.md`. They follow the researcher.md format, with one section per question, inline links, and a split between widely shared and fringe views.
+
+**What most people agree on:**
+- **AI amplifies whatever structure already exists.** The DORA 2025 report found that teams with loosely coupled systems gain from AI and tightly coupled ones see little benefit. AI is still linked to less stable delivery: more failed changes and more rework.
+- **Agents make architecture drift worse.** Thoughtworks Radar Vol. 34 (April 2026) added "Architecture drift reduction with LLMs": agents copy existing degraded patterns, and poor code breeds poorer code.
+- **Enforced layer rules are the strongest support for archy's core.** OpenAI's harness engineering post (Feb 2026) describes three engineers merging about a million lines in five months. They used strict per-domain layers with validated dependency directions, enforced by custom linters and structural tests, and called this "an early prerequisite" for working with agents. They also wrote lint messages that tell the agent how to fix the problem.
+- **Fitness functions are back, as "sensors".** Böckeler's April 2026 harness engineering article separates deterministic sensors from LLM-based ones. She says the deterministic ones reliably catch structural problems, including duplicate code, complexity and architectural drift. She lists two open questions: continuous drift sensors that run outside individual changes, and whether a sensor that never fires means good code or poor detection.
+- **Comprehension debt is the most-discussed concern.** It was coined by Jason Gorman (HN 532 points) and developed further by Margaret-Anne Storey. Stack Overflow 2025 shows trust in AI accuracy falling to roughly 29-33%, and 66% of respondents named "almost right" code as their top frustration.
+- **Review is now the bottleneck.** Practitioners converge on routing PRs by "blast radius". The proposed review packets list callers of changed symbols, how far a change reaches, and the PR's size.
+
+**Contested or fringe:** vertical slices as *the* agent-friendly architecture (vendor posts, nothing measured), spec-as-source development (Böckeler and an HN thread both criticise it as verbose and waterfall-like), and retyping AI code by hand.
+
+**Feature ideas these findings support:**
+1. A PR "structural review packet" from the GitHub Action, with a computed risk tier (low/medium/high) built from reach, new boundary crossings, touched hotspots and suggested places to split the PR.
+2. A way to predict structural overlap between parallel agents' worktrees. Existing tools such as Clash only look at which files are touched; I found nothing that uses the import graph.
+3. Violation messages that say how to fix the problem, as OpenAI's lints do.
+4. A scheduled drift-trend report, which fills Böckeler's continuous-sensor gap.
+5. An `/architecture-review` skill with archy doing the deterministic checks underneath.
+
+Thoughtworks also warns against bloated agent instruction files and notes research showing hand-written AGENTS.md files often beat generated ones. That argues for using the derived conventions headers as checks, not as prose for agents to read.
+
+**Python-only question:** TypeScript passed Python as GitHub's most-used language in August 2025, and GitHub credits typed languages making agent coding more reliable. I found no direct evidence that users are asking for multi-language support. Python's weaker typing gives it fewer built-in checks, which arguably makes a structural tool more useful there.
+
+**Gaps:**
+- Radar Vol. 35 isn't out yet; its preview webinars are 28-29 Oct and launch is likely in November, so it's worth re-checking then.
+- The LinearB and GitHub review figures came through secondary summaries, and I didn't fetch GitClear's 2025 duplication report. Verify those before quoting them publicly.
+- I ran out of tool budget before covering Latent Space, Pragmatic Engineer, Simon Willison, JetBrains, or the Shopify and Uber blogs.
+- I found no data at all on how often parallel agents' work conflicts.</result>
+<usage><subagent_tokens>112990</subagent_tokens><tool_uses>25</tool_uses><duration_ms>225776</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a06a3713a29a62f4f</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a06a3713a29a62f4f.output</output-file>
+<status>completed</status>
+<summary>Agent "Repo context research for agents" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The notes are written. Overall, 2025 to 2026 evidence agrees with archy's six null results: pushing repository structure at frontier agents up front doesn't improve correctness. Where structural information does help, it helps agents find the right code, or it acts as a check after the edit.
+
+File: `/Users/hosanglee/archy/research_notes/LLM code and software architecture/agent_context_evidence.md`
+
+**1. Code graph systems.** Gains are real but small, and they come almost entirely from finding the right file or function, not from writing the patch.
+- RepoGraph's headline "+32.8%" is a relative figure. In absolute terms it adds about 2 to 2.7 percentage points on SWE-bench Lite across four host systems.
+- ARISE: +4.7 points, but it needed a data-flow graph down to individual statements.
+- RepoAtlas: +2.4 points on SWE-bench Verified.
+- Gains are largest when the issue text shares no words with the code that needs changing:
+  - CodeCompass: +23.2 points on "hidden dependency" tasks, but only on one FastAPI repo.
+  - KGCompass: 89.7% of the bugs it locates aren't named in the issue.
+  - Bellam: each extra hop between the issue and the fix roughly halves small models' accuracy at finding the right function.
+- Agents often don't call the tool at all:
+  - In 58% of CodeCompass trials that had the graph, the agent never used it.
+  - A language-server study found agents used the semantic tool 0 to 6% of the time when finding code, and the tool cost 6% to 118% more tokens.
+  - Codebase-Memory used 10x fewer tokens but lost 9 points of answer quality (83% vs 92%).
+- No paper tests import-level layer rules, cycles or dependency matrices. Every graph paper works at function, class or statement level, which the strongest results suggest is where any signal is.
+
+**2. AGENTS.md and CLAUDE.md files.** The evidence is null to negative.
+- ETH Zurich (Feb 2026): context files don't improve success rates, and LLM-generated ones raise cost by more than 20%.
+  - Repository overviews didn't help any agent reach the relevant files faster, which is the closest published analogue to archy's briefs and headers.
+  - Agents did follow the files' instructions, so the null isn't an adherence failure.
+- Khatri (Jul 2026) ran Claude Code and Codex on 17 tasks. Context changed correctness by no more than 10 to 15 points either way. Agents failed on implementation skill, not on missing repository knowledge.
+- A factorial study of 1,650 sessions found file size, position, structure and conflicting files had no effect on compliance. Compliance did fade by about 5.6% in odds with each function generated.
+- The cost direction is contested: Lulla et al. found 16.6% fewer output tokens with an AGENTS.md, against ETH's +20%.
+- Tool-surface studies find pass rates barely change between tool designs; what changes is cost and how consistent repeated runs are.
+
+**3. Design and maintainability benchmarks.** Several 2026 benchmarks show that passing tests hides structural problems.
+- SlopCodeBench: structure erodes in 77% of runs as agents extend their own code. Quality guidance given up front lowers the starting level by up to a third but doesn't slow the decay.
+- SWE-CC: patches that pass tests still break 43.1% of the project's own contribution rules.
+- SWE Refactor Bench: only 5.4% of runs fully pass. Agents fake migrations by copying the old code so tests pass.
+- SWE-Maintain cuts the other way: agent-written code costs later tasks mainly through tests it left failing. Code that still passes earlier tests showed no measurable maintenance penalty.
+- The most relevant positive is Code of Theseus. Recovered architecture documents didn't change pass rate (33.7% vs 35.8%), but the rebuilt module structure got significantly closer to the original (module F1 from 0.54 to 0.63). Structural context may move structure rather than pass rate or tokens, which are the axes archy measured.
+
+**4. Feedback before vs after an edit.** No study compares the same information given before versus after an edit; that experiment is missing and could be archy's own pre-registered bench. Three signals point toward a check after the edit:
+- SWE-agent's lint check on edits added 3 points (2024, background).
+- A static-analysis feedback loop cut flagged issues from 40 to 80% down to 11 to 13%, though it was measured with the same tools that gave the feedback.
+- Up-front guidance didn't change SlopCodeBench's decay rate, and instructions fade within a session.
+
+**Caveats.** Many 2026 papers were read at abstract level only. I couldn't confirm ETH's "developer files beat LLM-generated ones by 7%" figure in the paper body. The Bellam numbers come from a summary of its code repository, not the paper. I didn't cover Moatless, AutoCodeRover's ablations or CodeRAG; they're listed as gaps in the notes.</result>
+<usage><subagent_tokens>146380</subagent_tokens><tool_uses>29</tool_uses><duration_ms>271916</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a8da4876dec0ff5aa</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a8da4876dec0ff5aa.output</output-file>
+<status>completed</status>
+<summary>Agent "Empirical studies LLM code architecture" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>The notes are written. The clearest measured failure in agent code is "add, don't integrate": more duplication and less reuse of existing code. Evidence that agents produce layering violations or import cycles at scale is very thin. And no study I found tests structural feedback given to an agent while it works.
+
+**Duplication and missed reuse (strongest evidence, three independent kinds of source)**
+- GitClear 2026 (623M changes): compared with 2022, cross-file function calls are down 35%, refactoring moves down 70% and block duplication up 81%. It is a population trend over the adoption period, not per-commit attribution, so it shows correlation only.
+- A study of real agent pull requests (Huang et al., MSR 2026) found about twice the redundancy of human PRs. The duplicates are semantic clones (same logic, different code), which plain metrics and text-matching clone detectors miss. Reviewers were not more negative toward these PRs.
+- SlopCodeBench (2026), where agents repeatedly extend their own code, found agent code 2.3x more redundant and 2.0x more complexity-concentrated than 473 open-source repos. Both measures rose in about 75% of runs.
+- **Implication for archy:** `duplicates` only finds identical clusters, so it will miss the clone type the agent-PR study reports.
+
+**Complexity**
+- A difference-in-differences study of projects adopting Cursor (MSR 2026) found complexity up 41.6% and static-analysis warnings up 30.3%. Once velocity was controlled for, the warnings effect lost significance, but about 9% extra complexity remained.
+- The Concordia study (May 2026) reports god classes, scattered functionality and "unstable dependency" smells, with architectural smell counts tracking total code size (ρ = 0.94). Caveats: it tested only MetaGPT, and the counts are not normalised for size.
+
+**Layering and cycles (weak)**
+- The only direct measurement is a single-author pilot with 5 runs per model. Llama 3 8B violated the requested hexagonal layering in 4 of 5 runs (including Domain-to-Infrastructure cycles), Claude 4.5 Sonnet in 1 of 5, GPT-5.1 in 0.
+- I found no large-scale measurement of cycles or layer violations in real agent PRs or repos.
+
+**Nulls worth keeping:**
+- The "Echoes of AI" randomized trial (151 participants) found no maintainability difference when other developers later evolved code written with AI.
+- A real-world measurement across 50+ metrics found AI-versus-human differences "rather small".
+- The Cursor study found no significant effect on duplicate line density.
+- Quality prompting lowers the starting level of erosion but not how fast it grows (SlopCodeBench, and again in the Concordia study).
+- AGENTS.md-style context files do not improve task success in two studies, and in one raise cost by over 20%.
+
+**Agent PRs in the wild:**
+- Merge rates run from 43% to 84% depending on agent and dataset.
+- Most rejections are not structural: abandonment by reviewers (38%), duplicate or superseded PRs, CI failures, wrong approach. One taxonomy has an explicit "architecture" reason at 0.3%.
+- Larger PRs touching more files are the most consistent structural predictor of rejection. That supports blast-radius signals like `impact` and `affected`.
+- METR: about half of agent patches that pass SWE-bench would not be merged by maintainers.
+
+**Static-analysis feedback loops:** these do cut the issues their own linters flag (for example, readability violations fell from over 80% to 11%). The one "architecture conformance" positive uses an LLM judge to pick fine-tuning data, not a feedback check at run time.
+
+These findings point archy toward gates and trend measurement (how structure degrades across turns) rather than pushing facts at the agent before it starts. That fits archy's own six nulls on delivery. The open experiment would be a closed-loop gate, where the agent gets `check`, `cycles` or `duplicates` failures after each edit and must fix them, measured by how fast erosion grows over many turns.
+
+Gaps are listed in the file. The ones that matter most: no exact figure for the semantic-clone rate; CodeScene's own pages quote 30% and 60% for the same paper's defect-risk result, and I couldn't find the paper to settle it; and two figures came from search summaries without checking the paper text (the 61-72% to 84-94% conformance gain, and a dead-code detail in the Patchwork paper).
+
+Files are in /Users/hosanglee/archy/research_notes/LLM code and software architecture:
+- empirical_studies.md</result>
+<usage><subagent_tokens>141914</subagent_tokens><tool_uses>34</tool_uses><duration_ms>316961</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a059a1098db0f98f9</task-id>
+<tool-use-id>toolu_01CsPjUajam7n81o64mes9kj</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a059a1098db0f98f9.output</output-file>
+<status>completed</status>
+<summary>Agent "Write final report" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I've saved the report at `/Users/hosanglee/archy/reports/LLM code and software architecture.md`. It runs about 4,100 words, contains no em dashes, and is built on all four research notes plus archy's own `docs/WHAT_DIDNT_WORK.md`, `bench/greenfield_results.md`, `docs/SPEC_INSTALL_HOOKS.md` and the open issues.
+
+**The answer to the question:**
+- **How agent code damages structure.** The strongest 2025-2026 evidence says it adds rather than integrates. It duplicates and re-implements existing functions, calls across files less, piles complexity into big functions, and produces oversized multi-file PRs (GitClear, MSR 2026 on real agent PRs, SlopCodeBench, the Cursor adoption study).
+- **Layers and cycles.** Evidence that agents break layer rules or create import cycles is thin: one 15-run pilot and one study covering a single agent framework. That agrees with archy's own numbers (0 of 25 agent runs, 0.66% of commits).
+- **Where the effect shows up.** Several careful studies found little or no quality effect (a preregistered RCT, a large real-repo measurement, SWE-Maintain). Damage appears mainly when supervision is low, volume is high, and agents keep extending their own code.
+- **Review doesn't catch it.** Reviewers merge redundant agent code without objecting, and "architecture" is 0.3% of rejection reasons. PR size and spread is the structural property most consistently linked to rejection.
+- **Before versus after the edit.** Outside studies now reproduce archy's six nulls. ETH found repository overviews in context files did not help any agent find the right file sooner. Instruction-following also decays within a session. Prompting for quality lowers where decay starts but not how fast it grows. Checks after the edit are the one placement with positive results, including archy's own 88% to 100% greenfield result.
+- **Market.** SonarQube made its architecture enforcement free for Python on all Cloud plans in March 2026, with an MCP server. GitNexus and codebase-memory-mcp (about 48k stars each) give away blast radius, snapshot diff and hotspots. What archy still has that they don't is declared rules, co-change coupling from git history, and checking that nothing gets worse over time.
+
+**Ranked features (the report gives evidence, the action it changes, and the null risk for each):**
+
+| Rank | Feature | Risk of repeating the nulls |
+|---:|---|---|
+| 1 | A check that fails only on new cycles or rule violations, `archy diff --strict` (#521) | Low |
+| 2 | Opt-in after-edit hook that says nothing when the code is clean (spec already written) | Low to medium |
+| 3 | Violation messages that name the allowed import route | Low to medium |
+| 4 | Advisory finding when a PR re-implements an existing function, limited to functions the diff adds | Medium (precision) |
+| 5 | Structural review summary on the PR from the GitHub Action | Low on the agent side, medium theater risk |
+| 6 | Weekly drift check that opens an issue only when something new appears | Low |
+| 7 | Draft rule file proposed from the current import graph, adoptable a module at a time | Medium |
+| 8 | Overlap check for parallel agent branches | High |
+
+The report also argues against more pre-edit context (the deferred brief in #427, ADR storage over MCP), new metrics with no action attached (a connectivity score, a per-module safety score), and more MCP tools.
+
+It names one experiment no published study has run: the same rule given before the edit versus enforced after it, measured by how fast violations and duplication grow across iterations. It says that test only makes sense on agent-written code, where there is room for an effect, and only after piloting the control arm first.
+
+A few sourcing caveats are stated in the report. GitClear's figures are correlational and come from a vendor. CodeScene's own pages give 30% in one place and 60% in another for the same defect-risk claim. The LinearB review-delay numbers were left out because the notes only had them second-hand.</result>
+<usage><subagent_tokens>130583</subagent_tokens><tool_uses>15</tool_uses><duration_ms>198752</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a06e53946f66f8413</task-id>
+<tool-use-id>toolu_01SexWj8TMgbWnYGrMgerj5h</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a06e53946f66f8413.output</output-file>
+<status>completed</status>
+<summary>Agent "Refute: hook + remediation text" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I've written the verdicts. One is a comment on an existing ticket and the other is a rejection, so nothing needs a new ticket. Nothing was filed or committed.
+
+1. **A (after-edit hook): COMMENT on #132.** Nothing from the hooks spec has shipped (no `--hooks` code or tests), and #132 tracks exactly this feature. It was closed `not_planned` only in the July bulk park, which explicitly invited a reopen. The comment proposes three changes. The hook should run the #521 ratchet rather than `score --strict`, which misses a new small cycle. It should print nothing at all on pass; the spec as written reports every turn, which would be a seventh delivery channel. And the first PR should cover only Claude Code's `Stop` event, since the research never re-checked Cursor's hook contract. The comment also says it is blocked on #521 and will rarely fire on existing code. Its evidence is weaker than the report states: the decay finding was post hoc, and no source shows a hook beating an agent calling the checker itself.
+2. **B (violations name the allowed route): REJECT.** #310 already covers a fixed "what to do" line per violation. The new part, working out the route from the rules, is wrong. `archy.yaml` only lists what is forbidden, so "allowed" just means "not forbidden". On a test fixture the heuristic suggested routing models through services to reach repository, and `archy contracts` flags that exact chain as broken. The three greenfield failures it cites were models reaching into repository, where no route exists and the fix is to reverse the dependency. The OpenAI page returned HTTP 403, so I couldn't check what it says about remediation messages.
+3. **Unexpected change in the repo:** `git status` shows `src/archy/cli.py` modified, but I did not make that edit. Line 1401 now reads `_require(True, "max-nodes", ...)`, which looks like a mutation-test change from another agent running at the same time. I left it alone; it needs restoring once that run finishes.
+
+The verdict file has the full per-gate reasoning, the comment text for #132, and an optional note to add to #310 so the route idea isn't proposed again.
+
+Files are in /private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/scratchpad/round1:
+- hook_remediation.md
+- fx/ (the test fixture)</result>
+<usage><subagent_tokens>102199</subagent_tokens><tool_uses>25</tool_uses><duration_ms>178280</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>aa30b7ea779ed2d21</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/aa30b7ea779ed2d21.output</output-file>
+<status>completed</status>
+<summary>Agent "Refute: drift sensor + draft rules" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>A (drift sensor): **COMMENT on #521**, no new ticket. A scheduled sensor is just #521's `diff --strict` run from the user's own cron trigger. It can't work before #521 lands, because plain `diff` reports every change to an existing cycle's membership as a new cycle. What it's meant to catch is rare, archy already recorded that unwatched cron alerts become noise, and the drift-sensor source poses it as an open question, not a result. The only archy-side addition is small: have the `--strict` failure print `path:line` for the offending import, which the data already holds, so a single `git blame` finds the commit that introduced it.
+
+B (draft architecture): **REJECT.** It fails the duplicate gate on substance: #122 and #288 already closed inference of intent, and `exclude:` plus #521 covers incremental adoption. It also fails the action test: a draft built from today's code passes on day one, and accepted unedited it becomes a freeze with no escape hatch. Most bench graphs have large import cycles that can't be ordered into layers, and Sonar's "Generate draft" isn't on the docs page the report cites.
+
+Verdicts with per-gate reasons and the ready comment for #521 are in /private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/scratchpad/round1/drift_draft.md. Nothing was filed, and `git status` is unchanged; the `cli.py` change was already there.</result>
+<usage><subagent_tokens>113406</subagent_tokens><tool_uses>26</tool_uses><duration_ms>156237</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a77a844e82423b139</task-id>
+<tool-use-id>toolu_017s58gZuNav8bvGo7g671Sy</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a77a844e82423b139.output</output-file>
+<status>completed</status>
+<summary>Agent "Refute: experiment + positioning" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>- **A: reject.** archy already ran the "nobody has run it" experiment as #369: the rule given up front in the prompt versus the same rule enforced in the loop, same tasks, same model. That came out 88% vs 100%, capped because 88% of runs already complied unaided. The only new part, agents repeatedly extending their own code (SlopCodeBench), was rejected in #480. Picking that setting because the problem is more common there is the corpus-shopping that #360 and #361 rule out. The result also wouldn't change any decision: the report backs the ratchet (#521, already open) either way. I didn't write the pre-registration skeleton, since it doesn't survive. The only way back in is a free first check: if SlopCodeBench publishes each checkpoint's code, count violations across checkpoints and kill the idea if they don't grow.
+- **B: comment on #535.** The Sonar claim checks out against Sonar's own announcement and docs: free on all SonarQube Cloud plans, including the free open-source plan, since 2026-03-19, with Python supported. One correction: Sonar's architecture tools for agents (its MCP server) need a paid Team or Enterprise plan, so "free with MCP tools" is wrong. GitNexus (48,049 stars) is noncommercial-licensed, so it isn't fully free to use. codebase-memory-mcp (47,540 stars) is MIT. The comment text is ready to post in the file.
+- **C: reject, and no parked research ticket either.** The report itself admits there is no measured conflict rate and every source is vendor or blog material. archy's two earlier attempts to infer problems from how modules connect hit the same precision wall (Study 9: precision 0.215). Nothing would trigger the "wait for a usage signal" condition; the existing route for that is #536.
+
+Nothing was filed on GitHub and the repo is untouched. The full gate-by-gate reasoning is in /private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/scratchpad/round1/experiment_positioning.md.</result>
+<usage><subagent_tokens>105654</subagent_tokens><tool_uses>22</tool_uses><duration_ms>161853</duration_ms></usage>
+</task-notification>
