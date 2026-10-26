@@ -128,7 +128,12 @@ from archy.cycles import Cycle, find_cycles
 from archy.diff import (
     DiffReport,
     compute_diff,
+    create_baseline_command,
+    default_baseline_path,
+    missing_baseline_hint,
     read_snapshot,
+    strict_baseline_problem,
+    strict_verdict,
     take_snapshot,
     write_snapshot,
 )
@@ -703,14 +708,26 @@ _READ_ONLY_ANNOTATIONS = ToolAnnotations(
     idempotentHint=True,
     openWorldHint=False,
 )
-"""All 12 archy tools are read-only structural analysis: they compute over a
-project and mutate nothing observable on the wire, are closed-domain (no
-network/external world), and are idempotent for a fixed source tree. Declaring
-this explicitly lets trusted clients auto-approve archy's calls instead of
-prompting on every read (MCP tool-annotations, 2025-03-26 spec). The tools that
-write a dotfile under .archy/ (snapshot, and score when record=True) are still
-read-only *for the model's purposes*: the file is a cache/baseline the next
-call reads, not an external side effect, and re-running them is idempotent."""
+"""archy's tools are structural analysis: they compute over a project, are
+closed-domain (no network/external world), and are idempotent for a fixed source
+tree. Declaring this explicitly lets trusted clients auto-approve archy's calls
+instead of prompting on every read (MCP tool-annotations, 2025-03-26 spec).
+`archy_score` writes `.archy/history.jsonl` only when `record=True`, and keeps
+this annotation so the common read-only call does not prompt; see
+`_SNAPSHOT_ANNOTATIONS` for the tool that always writes."""
+
+_SNAPSHOT_ANNOTATIONS = ToolAnnotations(
+    readOnlyHint=False,
+    destructiveHint=True,
+    idempotentHint=True,
+    openWorldHint=False,
+)
+"""`archy_snapshot` always overwrites `.archy/baseline.json`. It used to claim
+read-only on the grounds that the file is only a cache, which stopped being
+true once a baseline could gate (`diff --strict`, #521): an auto-approved
+re-snapshot is exactly how a new cycle gets grandfathered. The strict gate
+refuses that file for the same reason; this annotation stops a client from
+running the overwrite without asking."""
 
 
 def _register_tools(server: Server) -> None:
@@ -931,7 +948,7 @@ def _register_tools(server: Server) -> None:
     @server.tool(
         name="archy_snapshot",
         title="Snapshot baseline",
-        annotations=_READ_ONLY_ANNOTATIONS,
+        annotations=_SNAPSHOT_ANNOTATIONS,
         description=(
             "Capture score, cycles, and layer violations to .archy/baseline.json "
             "as a baseline that archy_diff will compare against. Call at the "
@@ -957,11 +974,15 @@ def _register_tools(server: Server) -> None:
             "improvements), per-component score deltas, and the cycles and "
             "layer violations that have been added or resolved since the "
             "baseline. Use after edits to localize regressions; see the `loop` "
-            "prompt."
+            "prompt. `strict=True` with `baseline` (a committed file, relative "
+            "to `path`) adds `strict`: `passed` is false on any cycle or layer "
+            "violation that baseline does not carry, and `reason` names it."
         ),
     )
-    def archy_diff(path: str) -> DiffReport | DiffErrorPayload:
-        return _run_diff(Path(path))
+    def archy_diff(
+        path: str, baseline: str | None = None, strict: bool = False
+    ) -> DiffReport | DiffErrorPayload:
+        return _run_diff(Path(path), baseline=baseline, strict=strict)
 
     @server.tool(
         name="archy_simulate",
@@ -1477,7 +1498,7 @@ def _run_snapshot(path: Path) -> SnapshotPayload:
     graph, full = _load_graph_pair(path)
     config_path = discover_config(path)
     snap = take_snapshot(graph, config_path=config_path, reach_graph=full)
-    target = path / ".archy" / "baseline.json"
+    target = default_baseline_path(path)
     write_snapshot(snap, target)
     return SnapshotPayload(
         score=snap.score,
@@ -1490,17 +1511,53 @@ def _run_snapshot(path: Path) -> SnapshotPayload:
     )
 
 
-def _run_diff(path: Path) -> DiffReport | DiffErrorPayload:
-    target = path / ".archy" / "baseline.json"
-    baseline = read_snapshot(target)
-    if baseline is None:
+def _run_diff(
+    path: Path, *, baseline: str | None = None, strict: bool = False
+) -> DiffReport | DiffErrorPayload:
+    if strict and baseline is None:
+        # Same rule as the CLI: `.archy/baseline.json` is what archy_snapshot
+        # overwrites, so a strict gate reading it could be grandfathered by the
+        # very call the agent is told to make at the start of a task.
+        create = create_baseline_command(path, path / "archy-baseline.json")
+        return DiffErrorPayload(
+            error=(
+                "strict=True needs `baseline`: a committed file such as "
+                f"archy-baseline.json, created with `{create}`. It never reads "
+                ".archy/baseline.json, which archy_snapshot overwrites."
+            )
+        )
+    target = default_baseline_path(path) if baseline is None else path / baseline
+    if strict and (
+        problem := strict_baseline_problem(path, target, suggested=path / "archy-baseline.json")
+    ):
+        return DiffErrorPayload(error=problem)
+    snapshot = read_snapshot(target)
+    if snapshot is None:
+        if baseline is not None:
+            # A relative `baseline` resolves against `path` here, unlike the
+            # CLI's cwd; say so, or the hint creates a second, drifting file.
+            hint = missing_baseline_hint(path, target, committed=True)
+            return DiffErrorPayload(error=f"{hint} (`baseline` is resolved relative to `path`.)")
         return DiffErrorPayload(
             error=f"no baseline at {target}; call archy_snapshot first to capture one."
         )
     graph, full = _load_graph_pair(path)
-    current = take_snapshot(graph, config_path=discover_config(path), reach_graph=full)
-    report = compute_diff(baseline, current)
-    return report.model_copy(update={"summary": summarize_diff(report, graph)})
+    config_path = discover_config(path)
+    current = take_snapshot(graph, config_path=config_path, reach_graph=full)
+    report = compute_diff(snapshot, current)
+    update: dict[str, object] = {"summary": summarize_diff(report, graph)}
+    if strict:
+        update["strict"] = strict_verdict(
+            snapshot,
+            current,
+            graph=graph,
+            root=path,
+            target=target,
+            label=baseline or str(target),
+            config_path=config_path,
+            location_root=path,
+        )
+    return report.model_copy(update=update)
 
 
 def _run_simulate(path: Path, *, add: list[EdgeSpec], remove: list[EdgeSpec]) -> SimulateReport:

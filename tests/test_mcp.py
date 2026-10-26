@@ -20,11 +20,14 @@ from pathlib import Path
 
 import pytest
 
+from archy.diff import DiffReport, take_snapshot, write_snapshot
 from archy.dsm import DSM, DSMSummary
+from archy.graph import build_graph, internal_subgraph
 from archy.layers import LayerConfigError
 from archy.mcp import (
     CheckErrorPayload,
     CheckPayload,
+    DiffErrorPayload,
     DSMTooLargePayload,
     ForbiddenEdge,
     GraphPayload,
@@ -54,8 +57,6 @@ from archy.simulate import EdgeSpec, SimulateReport
 def _internal_graph(root: Path):
     # Build the same internal-only graph the MCP layer hands to callers,
     # for parity assertions against graph_to_dict.
-    from archy.graph import build_graph
-
     g = build_graph(root)
     external = {n for n, d in g.nodes(data=True) if d.get("external")}
     g.remove_nodes_from(external)
@@ -156,22 +157,28 @@ def test_create_server_registers_expected_tools():
     assert len(names) == 13
 
 
-def test_all_tools_declare_read_only_annotations():
-    # Every archy tool is read-only structural analysis. Declaring the hints
-    # explicitly lets trusted clients auto-approve calls instead of prompting
-    # on every read (MCP tool-annotations, 2025-03-26 spec); the cautious
-    # default for an un-annotated tool is destructive/non-idempotent/open-world.
+def test_all_tools_declare_read_only_annotations_except_snapshot():
+    # Every archy tool but one is read-only structural analysis. Declaring the
+    # hints explicitly lets trusted clients auto-approve calls instead of
+    # prompting on every read (MCP tool-annotations, 2025-03-26 spec); the
+    # cautious default for an un-annotated tool is destructive/non-idempotent/
+    # open-world. `archy_snapshot` is the exception: it overwrites
+    # .archy/baseline.json, and an auto-approved overwrite is how a new cycle
+    # would get grandfathered past a baseline gate (#521).
     server = create_server()
     tools = asyncio.run(server.list_tools())
     assert tools, "expected registered tools"
+    names = {tool.name for tool in tools}
+    assert "archy_snapshot" in names
     for tool in tools:
         # Read the wire form: mcp 2.0 renamed these attributes to snake_case
         # while keeping the aliases, so `ann.readOnlyHint` breaks across the
         # major but the emitted JSON does not.
         ann = tool.model_dump(by_alias=True)["annotations"]
         assert ann is not None, f"{tool.name} has no annotations"
-        assert ann["readOnlyHint"] is True, f"{tool.name} not readOnlyHint"
-        assert ann["destructiveHint"] is False, f"{tool.name} not destructiveHint=False"
+        writes = tool.name == "archy_snapshot"
+        assert ann["readOnlyHint"] is not writes, f"{tool.name} readOnlyHint"
+        assert ann["destructiveHint"] is writes, f"{tool.name} destructiveHint"
         assert ann["idempotentHint"] is True, f"{tool.name} not idempotentHint"
         assert ann["openWorldHint"] is False, f"{tool.name} not openWorldHint=False"
 
@@ -771,6 +778,7 @@ def test_run_trend_payload_shape(acyclic_project: Path):
     )
     [row] = _run_trend(acyclic_project, last_n=10)
     assert row.timestamp
+    assert row.score is not None
     assert row.score.overall > 0
 
 
@@ -812,6 +820,7 @@ def test_run_impact_payload_shape(tmp_path: Path):
 def test_run_snapshot_writes_baseline_and_returns_payload(acyclic_project: Path):
     payload = _run_snapshot(acyclic_project)
     assert payload.baseline_path.endswith("baseline.json")
+    assert payload.score is not None
     assert payload.score.overall > 0
     assert (acyclic_project / ".archy" / "baseline.json").exists()
 
@@ -827,7 +836,6 @@ def test_snapshot_brief_mirrors_score_and_acyclic_invariant(acyclic_project: Pat
     derived independently here, by building the graph and calling
     `compute_score` directly, which is the shape a parity assertion needs.
     """
-    from archy.graph import build_graph
     from archy.score import compute_score
 
     payload = _run_snapshot(acyclic_project)
@@ -861,8 +869,6 @@ def test_snapshot_brief_load_bearing_ranked_and_capped(tmp_path: Path):
     (pkg / "m5.py").write_text("from pkg.m4 import a\nfrom pkg.m2 import c\n")
     (pkg / "m6.py").write_text("from pkg.m5 import a\n")
     (pkg / "m7.py").write_text("from pkg.m6 import a\nfrom pkg.m3 import d\n")
-
-    from archy.graph import build_graph
     from archy.risk import compute_edit_risk
 
     all_risks = compute_edit_risk(build_graph(tmp_path))
@@ -952,19 +958,16 @@ def test_simulate_tool_input_schema_uses_from_to_aliases():
 
 
 def test_run_diff_without_baseline_returns_error(acyclic_project: Path):
-    from archy.mcp import DiffErrorPayload
-
     result = _run_diff(acyclic_project)
     assert isinstance(result, DiffErrorPayload)
     assert "no baseline" in result.error
 
 
 def test_run_diff_after_snapshot_reports_zero_delta(acyclic_project: Path):
-    from archy.diff import DiffReport
-
     _run_snapshot(acyclic_project)
     result = _run_diff(acyclic_project)
     assert isinstance(result, DiffReport)
+    assert result.score_delta is not None
     assert result.score_delta.overall == 0.0
     assert result.cycles.added == ()
     assert result.cycles.resolved == ()
@@ -2147,3 +2150,108 @@ def test_check_transitive_checked_needs_a_verdict_not_a_request(tmp_path: Path, 
     # Names the real cause, not the flag the caller already passed and watched fail.
     assert "import-linter is not installed" in reason
     assert "produced no transitive verdict" in reason
+
+
+def _write_cyclic_ratchet_project(tmp_path: Path) -> Path:
+    """`pkg.a <-> pkg.b` plus acyclic `pkg.d`, `pkg.e`, with a committed
+    findings-only baseline written at that state."""
+    pkg = tmp_path / "pkg"
+    pkg.mkdir()
+    (pkg / "__init__.py").write_text("")
+    (pkg / "a.py").write_text("import pkg.b\n")
+    (pkg / "b.py").write_text("import pkg.a\n")
+    (pkg / "d.py").write_text("")
+    (pkg / "e.py").write_text("")
+    snap = take_snapshot(internal_subgraph(build_graph(tmp_path)))
+    write_snapshot(snap, tmp_path / "archy-baseline.json", findings_only=True)
+    return tmp_path
+
+
+def _add_cycle_and_resnapshot(project: Path) -> None:
+    """Add the `pkg.d <-> pkg.e` cycle, then re-snapshot as an agent told to
+    snapshot at the start of each task would, which overwrites
+    .archy/baseline.json with the new cycle already in it."""
+    (project / "pkg" / "d.py").write_text("import pkg.e\n")
+    (project / "pkg" / "e.py").write_text("import pkg.d\n")
+    _run_snapshot(project)
+
+
+def test_run_diff_strict_needs_a_committed_baseline(tmp_path: Path):
+    project = _write_cyclic_ratchet_project(tmp_path)
+    _run_snapshot(project)
+
+    result = _run_diff(project, strict=True)
+
+    assert isinstance(result, DiffErrorPayload)
+    assert "strict=True needs `baseline`" in result.error
+
+
+def test_run_diff_strict_is_not_grandfathered_by_a_resnapshot(tmp_path: Path):
+    """The #521 constraint: an agent told to snapshot at the start of each
+    task re-snapshots after adding a cycle. Strict reads the committed file,
+    so the new cycle still fails and is named."""
+    project = _write_cyclic_ratchet_project(tmp_path)
+    _add_cycle_and_resnapshot(project)
+
+    result = _run_diff(project, baseline="archy-baseline.json", strict=True)
+
+    assert isinstance(result, DiffReport)
+    dumped = result.model_dump()
+    assert dumped["strict"]["passed"] is False
+    assert dumped["strict"]["findings"][0]["modules"] == ("pkg.d", "pkg.e")
+    assert "pkg.d -> pkg.e at" in dumped["strict"]["reason"]
+    assert dumped["strict"]["baseline"] == "archy-baseline.json"
+
+
+def test_run_diff_strict_passes_on_carried_findings(tmp_path: Path):
+    project = _write_cyclic_ratchet_project(tmp_path)
+
+    result = _run_diff(project, baseline="archy-baseline.json", strict=True)
+
+    assert isinstance(result, DiffReport)
+    assert result.model_dump()["strict"]["passed"] is True
+    assert result.score_delta is None  # findings-only baseline: no score to compare
+
+
+def test_run_diff_strict_refuses_the_default_snapshot_file(tmp_path: Path):
+    """The agent being gated picks the arguments: naming .archy/baseline.json
+    after a re-snapshot would otherwise pass a new cycle."""
+    project = _write_cyclic_ratchet_project(tmp_path)
+    _add_cycle_and_resnapshot(project)
+
+    result = _run_diff(project, baseline=".archy/baseline.json", strict=True)
+
+    assert isinstance(result, DiffErrorPayload)
+    assert "the file `archy snapshot` overwrites" in result.error
+
+
+def test_run_diff_missing_committed_baseline_says_it_resolves_against_path(tmp_path: Path):
+    project = _write_cyclic_ratchet_project(tmp_path)
+
+    result = _run_diff(project, baseline="nope.json", strict=True)
+
+    assert isinstance(result, DiffErrorPayload)
+    assert f"archy snapshot {project} --findings-only --out {project / 'nope.json'}" in result.error
+    assert "relative to `path`" in result.error
+
+
+def test_run_diff_strict_refuses_when_the_layer_rules_disappeared(tmp_path: Path):
+    """Same refusal as the CLI, on the surface agents call."""
+    project = _write_cyclic_ratchet_project(tmp_path)
+    (project / "pkg" / "a.py").write_text("import pkg.b\nimport pkg.d\n")
+    (project / "archy.yaml").write_text(
+        "layers:\n  low: {modules: [pkg.a]}\n  high: {modules: [pkg.d]}\n"
+        "forbid:\n  - {from: low, to: high}\n"
+    )
+    snap = take_snapshot(
+        internal_subgraph(build_graph(project)), config_path=project / "archy.yaml"
+    )
+    assert snap.violations, "fixture must record a layer violation"
+    write_snapshot(snap, project / "archy-baseline.json", findings_only=True)
+    (project / "archy.yaml").unlink()
+
+    result = _run_diff(project, baseline="archy-baseline.json", strict=True)
+
+    assert isinstance(result, DiffReport)
+    assert result.model_dump()["strict"]["passed"] is False
+    assert "no archy.yaml was found" in result.model_dump()["strict"]["reason"]
