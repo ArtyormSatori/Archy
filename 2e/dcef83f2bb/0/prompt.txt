@@ -1243,3 +1243,83 @@ I limited the review to the changeset, per `.deepwork/review/python_conventions.
 **Three-surface check:** I only grepped for `--strict` and `strict` in `src/archy/cli.py` and `src/archy/mcp.py`. The `diff --strict` option is wired in the CLI (`src/archy/cli.py:1050` and `:1058`). On MCP, `src/archy/mcp.py:976-984` runs `_run_diff(..., strict=strict)`. Both import `strict_verdict` and `strict_baseline_problem` from the new `ratchet` module. I did not read the text or JSON renderers or run the tests.</result>
 <usage><subagent_tokens>21969</subagent_tokens><tool_uses>4</tool_uses><duration_ms>35793</duration_ms></usage>
 </task-notification>
+
+---
+
+<task-notification>
+<task-id>a42641385082a81e2</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/a42641385082a81e2.output</output-file>
+<status>completed</status>
+<summary>Agent "R3 adversarial diff --strict" finished</summary>
+<note>A task-notification fires each time this agent stops with no live background children of its own. The user can send it another message and resume it, so the same task-id may notify more than once.</note>
+<result>I found five real defects. None blocks the core ratchet, which held end to end on a real repo. Two of them (findings 1 and 2) weaken the round-2 fixes: the new refusals let some cases through that they were meant to catch. Line numbers are at HEAD 6852c8b. Your uncommitted change (`os.path.samefile` to `Path.samefile`) leaves finding 3 unchanged. Fixtures are under `/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/scratchpad/adv521r3/`, and every command below used the branch's `/Users/hosanglee/archy/.venv/bin/archy`.
+
+## Findings
+
+**1. Medium: the `rules_found` refusal only catches a deleted `archy.yaml`, not dead rules.** (ratchet.py:134, cli.py:1097, mcp.py:1553)
+- If `archy.yaml` is present but its patterns match nothing (the bare `pkg.core` instead of `pkg.core.**` from AGENTS.md, or a package rename the config was never updated for), the baseline's violations vanish and new ones go unseen. The gate reports PASS.
+- Fixture: `.../adv521r3/hintfx`. Take the baseline with the real rules, swap to dead patterns, add `app/pkg/core/d.py` importing `pkg.ui`:
+  - Dead rules: `# strict: PASS, ... 1 cycle(s) and 0 violation(s) carried`, exit 0.
+  - Real rules: `FAIL ... new layer violation (core -&gt; ui): pkg.core.d -&gt; pkg.ui.view at pkg/core/d.py:1`.
+  - Only a deleted `archy.yaml` is refused.
+- The refusal message also says what is wrong but not what to do.
+- Fix:
+  - Refuse when a layer named in a baseline violation now matches zero modules (catches dead patterns and renames).
+  - Add to the message: "restore archy.yaml, or if the rules were removed on purpose, regenerate with `&lt;create_baseline_command&gt;`".
+- No false firing: `archy.yaml` present with empty layers gives `rules_found=True`.
+
+**2. Low-Medium: the default-file refusal only checks the scanned path's own `.archy/baseline.json`.** (diff.py:284-297)
+- A parent directory's snapshot file still gets through, and an agent's re-snapshot grandfathers a new cycle.
+- Fixture: `.../adv521r3/subfx`.
+  1. `archy snapshot .`, then `archy diff app --strict --baseline .archy/baseline.json` gives PASS.
+  2. Add a v&lt;-&gt;w cycle: exit 1.
+  3. Call MCP `_run_snapshot(Path('.'))`: PASS, "2 cycle(s) ... carried", exit 0.
+  - Control: `archy diff . --strict --baseline .archy/baseline.json` is refused.
+- The README says the default file is refused "even when named", so this contradicts it.
+- Fix: refuse any target where `resolved.name == "baseline.json"` and `resolved.parent.name == ".archy"`, and keep the samefile check.
+
+**3. Low: `strict_baseline_problem` crashes when `.archy/` is unreadable.** (diff.py:296)
+- Python 3.10's `Path.exists()` raises `PermissionError` instead of returning False.
+- Repro: in `hintfx`, `chmod 000 app/.archy; archy diff app --strict --baseline good.json` crashes with a traceback ending in `PermissionError: [Errno 13] Permission denied: 'app/.archy/baseline.json'`. The non-strict diff works.
+- Fix: wrap the exists/samefile pair in `try/except OSError` and treat an error as "not the same file". A hard link to an unreadable file would be unreadable anyway. Windows is fine: `samefile` has worked there since 3.2.
+
+**4. Low: some hints still break when copied or followed.**
+- (a) `create_baseline_command` (diff.py:314) does not quote the path. In `.../adv521r3/my proj`, evaluating the suggested command gives `Error: ... Directory '.../adv521r3/my' does not exist`. Fix: `shlex.quote(str(root))` and `shlex.quote(str(target))`.
+- (b) The no-module-list refusal (ratchet.py:129) still gives a hint with no path in it: `archy snapshot --findings-only --out old.json`. That scans the current directory.
+  - Repro in `hintfx`: strip `modules` from the baseline, run the hint from the repo root, then run `archy diff app --strict --baseline b.json`.
+  - Result: FAIL with `new layer violation (core -&gt; ui): pkg.core.c -&gt; pkg.ui.view`. The existing violation reads as new because `app/archy.yaml` was missed, which is the exact failure `create_baseline_command`'s docstring describes.
+  - Fix: build this hint inside `strict_verdict` with `create_baseline_command(root, target)`.
+- (c) The MCP surface (mcp.py:1523) has the same path-less hint, and the `strict_baseline_problem` hint on MCP says `--out archy-baseline.json`. That writes relative to the current directory, while MCP resolves `baseline` relative to `path`. The `action.yml:35` description also has no path, so it goes wrong when the `path` input is not `.`.
+
+**5. Low: `path:line` locations are relative to the scanned path, not the current directory or repo root.** (diff.py:345, ratchet.py:265)
+- Issue #521 asked for a location you can feed straight to `git blame`. With `archy diff rich --strict ...` the text shows `_loop.py:2`, and `git blame -L 2,2 -- _loop.py` fails with `fatal: no such path '_loop.py' in HEAD`. With `archy diff .` it shows `rich/_loop.py:2`, which works.
+- This only bites when the scanned path is a subdirectory. The Action and pre-commit defaults use `.`.
+- Fix: make the paths relative to the current directory on the CLI (keep them relative to `path` on MCP), or to the git top level.
+
+## What held
+
+- **End to end on rich** (shallow clone, commit 9d8f9a3; 100 modules, 2 cycles of 53 and 2 modules):
+  - Snapshot findings-only: 0.56s.
+  - Strict diff with nothing changed: PASS, exit 0, 0.56s.
+  - New `_loop` &lt;-&gt; `_pick` cycle: FAIL, exit 1, naming both closing edges with `path:line`. The text, JSON `strict` block, and MCP `model_dump()` all agree.
+  - MCP with nothing changed: PASS in 0.74s. After adding the cycle and then calling `archy_snapshot`, the strict check still fails and names `('rich._loop', 'rich._pick')`. That is the acceptance case from the #521 comment.
+- **Findings-only file is stable:** it is byte-identical after inserting a line above imports in `rich/console.py`.
+- **Exit codes:** both refusals exit 1, and usage errors exit 2.
+- **CLI vs MCP `label`:** the CLI shows the path relative to the current directory, MCP shows `baseline` as passed. Only the hint problem in 4(b)/(c) comes from this; the verdict text is otherwise consistent.</result>
+<usage><subagent_tokens>99673</subagent_tokens><tool_uses>29</tool_uses><duration_ms>257092</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>b83u5tvz3</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/private/tmp/claude-501/-Users-hosanglee-archy/62b42b3b-6f61-45e8-9d8c-4a8e4252be56/tasks/b83u5tvz3.output</output-file>
+<status>completed</status>
+<summary>Background command "Wait for PR 569 CI to finish" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+lets merge and deploy. Done for the day after
