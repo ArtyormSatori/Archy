@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "e9204066ea87",
+  "strategy": "manual-commit",
+  "branch": "alee/387-derived-entrypoints",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "README.md",
+    "src/archy/entrypoints.py",
+    "src/archy/layers.py",
+    "tests/test_entrypoints.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/e9/204066ea87/0/metadata.json",
+      "transcript": "/e9/204066ea87/0/full.jsonl",
+      "content_hash": "/e9/204066ea87/0/content_hash.txt",
+      "prompt": "/e9/204066ea87/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 30,
+    "cache_creation_tokens": 36412,
+    "cache_read_tokens": 4853252,
+    "output_tokens": 12620,
+    "api_call_count": 13
+  }
+}
