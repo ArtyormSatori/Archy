@@ -16,9 +16,9 @@ dry-run system on a single Linux runner.
 archy:owns        DryRunWriteSystem, InstallError, RealWriteSystem, WriteRecord,
                   WriteSystem
 archy:mirrored-by DryRunWriteSystem -> archy.cli, archy.install.runner,
-                  InstallError -> archy.cli, archy.install, archy.install.merge,
-                  archy.install.runner, WriteSystem -> archy.install.base,
-                  archy.install.runner
+                  InstallError -> archy.cli, archy.install, archy.install.base,
+                  archy.install.merge, archy.install.runner,
+                  WriteSystem -> archy.install.base, archy.install.runner
 """
 
 from __future__ import annotations
