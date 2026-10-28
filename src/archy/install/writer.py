@@ -67,14 +67,18 @@ def _read_text(path: Path) -> str | None:
         text = path.read_text(encoding="utf-8")
     except FileNotFoundError:
         return None
+    except IsADirectoryError as error:
+        raise InstallError(f"{path}: is a directory; archy will not edit it") from error
     except UnicodeDecodeError as error:
         raise InstallError(
             f"{path}: not valid UTF-8 ({error.reason} at byte {error.start}); "
             "archy will not edit it"
         ) from error
     except PermissionError as error:
+        if path.is_dir():
+            raise InstallError(f"{path}: is a directory; archy will not edit it") from error
         raise InstallError(f"{path}: cannot read ({error})") from error
-    if text.startswith("﻿"):
+    if text.startswith("\ufeff"):
         raise InstallError(f"{path}: starts with a UTF-8 BOM; archy will not edit it")
     return text
 
