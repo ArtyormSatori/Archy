@@ -1,0 +1,33 @@
+merged
+
+---
+
+lets search for archy alternatives on the internet and conntinue the research for new ideas and features. Create tickets as we find new paths
+
+---
+
+do both
+
+---
+
+what other surface area can we consider for archy? are there any tools or even smaller huggingface models that we can integrate with archy to assist archy with understanding the underlying architecture of code bases?
+
+---
+
+yep, file the ticket. It is not a good first issue so assign to me
+
+---
+
+ok. Lets pivot to creating more tickets for "good first issue" and (new label) "good second issue". Should we also consider creating new labels for "easy", "medium", "hard"? What are the difficulty labeling practices for other well known python repos?
+
+---
+
+do both
+
+---
+
+is the "issues" in the repo open for outside contributor? Can they open bug reports/issues/tickets?
+
+---
+
+ok lets create the issue templates
